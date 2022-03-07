@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "web-core", "web-core.csproj", "{EE8A652C-FDFC-4AD8-BF6C-803D5DF0173F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "web-core", "web-core.csproj", "{EE8A652C-FDFC-4AD8-BF6C-803D5DF0173F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "web-tests", "..\web-tests\web-tests.csproj", "{BB9F6DE7-9DFD-4E4F-A993-4C9B2F88D489}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dao-core", "..\dao-core\dao-core.csproj", "{58F7CEE2-BBA0-4A39-8BCE-F628DBC4DBE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{EE8A652C-FDFC-4AD8-BF6C-803D5DF0173F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE8A652C-FDFC-4AD8-BF6C-803D5DF0173F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE8A652C-FDFC-4AD8-BF6C-803D5DF0173F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB9F6DE7-9DFD-4E4F-A993-4C9B2F88D489}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB9F6DE7-9DFD-4E4F-A993-4C9B2F88D489}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB9F6DE7-9DFD-4E4F-A993-4C9B2F88D489}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB9F6DE7-9DFD-4E4F-A993-4C9B2F88D489}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58F7CEE2-BBA0-4A39-8BCE-F628DBC4DBE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58F7CEE2-BBA0-4A39-8BCE-F628DBC4DBE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58F7CEE2-BBA0-4A39-8BCE-F628DBC4DBE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58F7CEE2-BBA0-4A39-8BCE-F628DBC4DBE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
