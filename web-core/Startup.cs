@@ -1,10 +1,17 @@
+using System.Collections.Generic;
+using DAL;
+using DAL.Entities;
+using DAL.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using web_core.Controllers;
+using web_core.Services;
 
 namespace web_core
 {
@@ -26,6 +33,19 @@ namespace web_core
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddDbContext<DataContext>(options =>
+            {
+                options.UseNpgsql(
+                    Configuration.GetConnectionString("RmmConnection"),
+                    assembly =>
+                    {
+                        assembly.MigrationsAssembly("DAL");
+                    });
+            });
+
+            services.AddScoped<IDbRepository, DbRepository>();
+            services.AddTransient<IDataService<DeviceInfo>, DeviceDataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
