@@ -6,12 +6,12 @@ import { RegComponent } from './components/reg/reg.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegComponent],
-  imports: [
-    CommonModule
-  ], 
-  exports: [
-    LoginComponent, RegComponent
-  ]
+    declarations: [LoginComponent, RegComponent],
+    imports: [
+        CommonModule
+    ], 
+    exports: [
+        LoginComponent, RegComponent
+    ]
 })
 export class AuthModule { }

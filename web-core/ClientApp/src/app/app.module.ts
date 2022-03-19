@@ -8,19 +8,19 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth-module/auth.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot([
-// { path: 'counter', component: CounterComponent },
-], { relativeLinkResolution: 'legacy' }),
-    AuthModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+    ],
+    imports: [
+        BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+        HttpClientModule,
+        FormsModule,
+        RouterModule.forRoot([
+            // { path: 'counter', component: CounterComponent },
+        ], { relativeLinkResolution: 'legacy' }),
+        AuthModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
