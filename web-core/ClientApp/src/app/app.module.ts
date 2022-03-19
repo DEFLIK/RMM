@@ -16,8 +16,8 @@ import { AuthModule } from './auth-module/auth.module';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      // { path: 'counter', component: CounterComponent },
-    ]),
+// { path: 'counter', component: CounterComponent },
+], { relativeLinkResolution: 'legacy' }),
     AuthModule
   ],
   providers: [],
