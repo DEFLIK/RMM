@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
-export class SessionService {
+export class SessionCacheService {
     private get currSessionId(): string {
         return localStorage.getItem('selectedSessionId');
     }

@@ -1,3 +1,4 @@
 export interface IUserSession {
-    sessionId: string
+    sessionId: string,
+    hash: string
 }
