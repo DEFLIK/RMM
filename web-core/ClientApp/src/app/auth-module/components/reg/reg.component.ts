@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -7,12 +7,21 @@ import { OnInit } from '@angular/core';
     templateUrl: './reg.component.html',
     styleUrls: ['./reg.component.css']
 })
-export class RegComponent implements OnInit {
+export class RegComponent {
+    
+    public regForm: FormGroup = new FormGroup({
+        userName: new FormControl('', Validators.required),
+        userEmail: new FormControl('', [
+            Validators.required,
+            Validators.pattern('[a-zA-Z_]+@[a-zA-Z_]+?.[a-zA-Z]{2,3}')
+        ]),
+        userPassword: new FormControl('', Validators.required)
+    });;
 
-    constructor() { }
+    constructor() { 
+    }
 
-    public ngOnInit(): void {
-      let nib: number = 0;
-      nib = 1;
+    public submit(): void {
+        console.log(this.regForm.controls);
     }
 }

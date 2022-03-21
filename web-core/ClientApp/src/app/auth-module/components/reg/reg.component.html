@@ -1,1 +1,20 @@
 <p>reg works!</p>
+<form [formGroup] = "regForm">
+    <input type="text" name="name" placeholder="Username" formControlName="userName">
+    <input type="text" name="email" placeholder="Email" formControlName="userEmail">
+    <input type="password" name="password" placeholder="Password" formControlName="userPassword">
+</form>
+<div
+    class="alert alert-danger"
+    *ngIf="
+        (regForm.controls['userName'].invalid &&
+        regForm.controls['userName'].touched) ||
+        (regForm.controls['userPassword'].invalid &&
+        regForm.controls['userPassword'].touched) ||
+        (regForm.controls['userEmail'].invalid &&
+        regForm.controls['userPassword'].touched)
+    "
+>
+    Please complete all fields
+</div>
+<button (click)="submit()">Create account</button>

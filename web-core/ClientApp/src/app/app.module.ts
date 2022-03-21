@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth-module/auth.module';
+import { RegComponent } from './auth-module/components/reg/reg.component';
+import { LoginComponent } from './auth-module/components/login/login.component';
 
 @NgModule({
     declarations: [
@@ -17,6 +19,8 @@ import { AuthModule } from './auth-module/auth.module';
         FormsModule,
         RouterModule.forRoot([
             // { path: 'counter', component: CounterComponent },
+            { path: '', component: LoginComponent },
+            { path: 'reg', component: RegComponent }
         ], { relativeLinkResolution: 'legacy' }),
         AuthModule
     ],
