@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using web_core.Controllers;
 using web_core.Services;
+using web_core.Services.AuthService;
 
 namespace web_core
 {
@@ -46,6 +47,7 @@ namespace web_core
 
             services.AddScoped<IDbRepository, DbRepository>();
             services.AddTransient<IDataService<DeviceInfo>, DeviceDataService>();
+            services.AddTransient<IAuthService, AuthService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

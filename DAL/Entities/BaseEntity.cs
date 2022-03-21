@@ -9,7 +9,7 @@ namespace DAL.Entities
 {
     public class BaseEntity : IEntity
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = new Guid();
         public bool IsActive { get; set; } = true;
     }
 }

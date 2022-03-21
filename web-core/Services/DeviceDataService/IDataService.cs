@@ -8,9 +8,9 @@ namespace web_core.Services
 {
     public interface IDataService<T> where T : class, IEntity
     {
-        Task<Guid> Create(T lead);
-        Task<T> Get(Guid id);
-        Task Update(T lead);
-        Task Delete(Guid leadId);
+        public Task<Guid> Create(T lead);
+        public Task<T> Get(Guid id);
+        public Task Update(T lead);
+        public Task Delete(Guid leadId);
     }
 }

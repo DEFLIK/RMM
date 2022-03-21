@@ -23,27 +23,27 @@ namespace web_core.Controllers
         }
 
         [HttpGet]
-        public async Task<string> GetDevice(Guid id)
+        public async Task<ActionResult<string>> GetDevice(Guid id)
         {
-            return JsonConvert.SerializeObject(await _serivce.Get(id));
+            return Ok(JsonConvert.SerializeObject(await _serivce.Get(id)));
         }
 
-        [HttpPost]
-        public string AddRandom()
-        {
-            var rng = new Random();
-            var device = new DeviceInfo()
-            {
-                Coordinates = new[] { rng.Next(0, 50) + rng.NextDouble(), rng.Next(0, 50) + rng.NextDouble() },
-                Id = new Guid(),
-                Os = "Windows",
-                RunTimeS = rng.Next(0, 10000),
-                Status = (DeviceStatus)rng.Next(0, 5)
-            };
-            device.Name = "pc-" + device.Id.ToString().Substring(0, 5);
-            _serivce.Create(device);
+        //[HttpPost]
+        //public ActionResult<string> AddRandom()
+        //{
+        //    var rng = new Random();
+        //    var device = new DeviceInfo()
+        //    {
+        //        Coordinates = new[] { rng.Next(0, 50) + rng.NextDouble(), rng.Next(0, 50) + rng.NextDouble() },
+        //        Id = new Guid(),
+        //        Os = "Windows",
+        //        RunTimeS = rng.Next(0, 10000),
+        //        Status = (DeviceStatus)rng.Next(0, 5)
+        //    };
+        //    device.Name = "pc-" + device.Id.ToString().Substring(0, 5);
+        //    _serivce.Create(device);
 
-            return JsonConvert.SerializeObject(device);
-        }
+        //    return Ok(JsonConvert.SerializeObject(device));
+        //}
     }
 }

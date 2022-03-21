@@ -7,10 +7,8 @@ using DAL.Interfaces;
 
 namespace DAL.Entities
 {
-    public class DeviceInfo : IEntity
+    public class DeviceInfo : BaseEntity
     {
-        public Guid Id { get; set; } = new Guid();
-        public bool IsActive { get; set; } = true;
         public string Name { get; set; }
         public DeviceStatus Status { get; set; }
         public string Os { get; set; }
