@@ -29,9 +29,17 @@ namespace web_core.Controllers
                 var user = await _serivce.OpenSessionAsync(userName, hash);
                 return Ok(GetUserSessionJson(user));
             }
-            catch (KeyNotFoundException)
+            catch (Exception e)
             {
-                return NotFound($"There is no registred user with name = '{userName}'");
+                switch (e)
+                {
+                    case KeyNotFoundException _:
+                        return NotFound($"There is no registred user with name = '{userName}'");
+                    case ArgumentException _:
+                        return BadRequest("Wrong password");
+                    default:
+                        throw;
+                }
             }
         }
 
@@ -43,9 +51,17 @@ namespace web_core.Controllers
                 var user = await _serivce.CloseSessionAsync(userName, hash);
                 return Ok(GetUserSessionJson(user));
             }
-            catch (KeyNotFoundException)
+            catch (Exception e)
             {
-                return NotFound($"There is no registred user with name = '{userName}'");
+                switch (e)
+                {
+                    case KeyNotFoundException _:
+                        return NotFound($"There is no registred user with name = '{userName}'");
+                    case ArgumentException _:
+                        return BadRequest("Wrong password");
+                    default:
+                        throw;
+                }
             }
         }
 

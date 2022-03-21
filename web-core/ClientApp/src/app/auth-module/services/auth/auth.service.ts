@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { $ } from 'protractor';
 import { Observable } from 'rxjs';
 import { IUserSession } from '../../interfaces/IUserSession';
 import { SessionCacheService } from '../sessionCacheService/sessionCache.service';
 import { EncryptionService } from '../encrypt/encryption.service';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +13,8 @@ export class AuthService {
     constructor(
         private _http: HttpClient,
         private _encr: EncryptionService,
-        private _cacher: SessionCacheService
+        private _cacher: SessionCacheService,
+        private _router: Router
     ) {}
 
     public async registerNewUserAsync(userName: string, email: string, pass: string): Promise<void> {
@@ -21,7 +22,7 @@ export class AuthService {
         const answer: Observable<IUserSession> = this._http.get<IUserSession>(
             `api/auth/registerNewUser?userName=${userName}&email=${email}&hash=${encryptedPass}`);
 
-        answer.subscribe((session: IUserSession) => this.openSessionAsync(userName, encryptedPass));
+        answer.subscribe((session: IUserSession) => this.openSessionAsync(userName, pass));
     }
 
     public async openSessionAsync(userName: string, pass: string): Promise<void> {
@@ -33,6 +34,7 @@ export class AuthService {
             console.log(resp);
             this._cacher.cacheSession(resp.name, encryptedPass);
             this._cacher.setCurrentSession(resp.name);
+            this._router.navigateByUrl('reg');
         });
     }
 

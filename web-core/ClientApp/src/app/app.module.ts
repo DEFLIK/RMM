@@ -19,7 +19,7 @@ import { LoginComponent } from './auth-module/components/login/login.component';
         FormsModule,
         RouterModule.forRoot([
             // { path: 'counter', component: CounterComponent },
-            { path: '', component: LoginComponent },
+            { path: 'log', component: LoginComponent },
             { path: 'reg', component: RegComponent }
         ], { relativeLinkResolution: 'legacy' }),
         AuthModule

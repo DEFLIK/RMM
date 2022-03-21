@@ -18,11 +18,15 @@ namespace web_core.Services.AuthService
             _dbRepository = dbRepository;
         }
 
+        /// <exception cref="KeyNotFoundException"></exception>
+        /// /// <exception cref="ArgumentException"></exception>
         public async Task<User> OpenSessionAsync(string userName, string hash)
         {
             var user = _dbRepository.Get<User>(usr => usr.Name == userName).FirstOrDefault();
             if (user == null)
                 throw new KeyNotFoundException();
+            if (user.Hash != hash)
+                throw new ArgumentException();
 
             user.IsSessionActive = true;
             await _dbRepository.Update(user);
@@ -31,11 +35,15 @@ namespace web_core.Services.AuthService
             return user;
         }
 
+        /// <exception cref="KeyNotFoundException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<User> CloseSessionAsync(string userName, string hash)
         {
             var user = _dbRepository.Get<User>(usr => usr.Name == userName).FirstOrDefault();
             if (user == null)
                 throw new KeyNotFoundException();
+            if (user.Hash != hash)
+                throw new ArgumentException();
 
             user.IsSessionActive = false;
             await _dbRepository.Update(user);
@@ -44,6 +52,7 @@ namespace web_core.Services.AuthService
             return user;
         }
 
+        /// <exception cref="ArgumentException"></exception>
         public async Task<User> RegisterNewUserAsync(string userName, string email, string hash)
         {
             var user = _dbRepository.Get<User>(usr => usr.Name == userName).FirstOrDefault();
