@@ -7,14 +7,14 @@
 <div
     class="alert alert-danger"
     *ngIf="
-        (regForm.controls['userName'].invalid &&
-        regForm.controls['userName'].touched) ||
-        (regForm.controls['userPassword'].invalid &&
-        regForm.controls['userPassword'].touched) ||
-        (regForm.controls['userEmail'].invalid &&
-        regForm.controls['userPassword'].touched)
+        ((regForm.controls['userName'].invalid) ||
+        (regForm.controls['userPassword'].invalid) ||
+        (regForm.controls['userEmail'].invalid));
+        else allowed
     "
 >
     Please complete all fields
 </div>
-<button (click)="submit()">Create account</button>
+<ng-template #allowed>
+    <button (click)="submit()">Create account</button>
+</ng-template>

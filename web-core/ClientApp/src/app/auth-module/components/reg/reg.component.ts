@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IUserSession } from '../../interfaces/IUserSession';
+import { AuthService } from '../../services/auth/auth.service';
 
 
 @Component({
@@ -18,10 +20,14 @@ export class RegComponent {
         userPassword: new FormControl('', Validators.required)
     });;
 
-    constructor() { 
-    }
+    constructor(
+        private _auth: AuthService
+    ) {}
 
     public submit(): void {
-        console.log(this.regForm.controls);
+        this._auth.registerNewUserAsync(
+            this.regForm.get('userName').value, 
+            this.regForm.get('userEmail').value, 
+            this.regForm.get('userPassword').value);
     }
 }

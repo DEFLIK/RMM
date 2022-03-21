@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -13,10 +14,12 @@ export class LoginComponent {
         userPassword: new FormControl('', Validators.required)
     });;
 
-    constructor() { 
+    constructor(private _auth: AuthService) { 
     }
 
     public submit(): void {
-        console.log(this.loginForm.controls);
+        this._auth.openSessionAsync(
+            this.loginForm.get('userName').value, 
+            this.loginForm.get('userPassword').value);
     }
 }

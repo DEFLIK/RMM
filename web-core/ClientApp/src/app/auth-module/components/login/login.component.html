@@ -6,13 +6,16 @@
 <div
     class="alert alert-danger"
     *ngIf="
-        (loginForm.controls['userName'].invalid &&
+        ((loginForm.controls['userName'].invalid &&
         loginForm.controls['userName'].touched) ||
         (loginForm.controls['userPassword'].invalid &&
-        loginForm.controls['userPassword'].touched)
+        loginForm.controls['userPassword'].touched));
+        else allowed
     "
 >
     Please complete all fields
 </div>
-<button (click)="submit()">Confirm</button>
+<ng-template #allowed>
+    <button (click)="submit()">Confirm</button>
+</ng-template>
 <button [routerLink] = "'reg'">No account?</button>

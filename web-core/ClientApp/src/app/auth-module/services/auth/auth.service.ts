@@ -16,24 +16,19 @@ export class AuthService {
         private _cacher: SessionCacheService
     ) {}
 
-    public async registerNewUserAsync(userName: string, email: string, pass: string): Promise<IUserSession> {
+    public async registerNewUserAsync(userName: string, email: string, pass: string): Promise<void> {
         const encryptedPass: string = await this._encr.encryptStringAsync(pass);
         const answer: Observable<IUserSession> = this._http.get<IUserSession>(
             `/registerUser/?userName=${userName},email=${email},hash=${encryptedPass}`);
 
-        let result: IUserSession;
-        answer.subscribe((resp: IUserSession) => {
-            result = resp;
-        });
-
-        return result;
+        answer.subscribe((session: IUserSession) => this.openSessionAsync(userName, encryptedPass));
     }
 
     public async openSessionAsync(userName: string, pass: string): Promise<void> {
         const encryptedPass: string = await this._encr.encryptStringAsync(pass);
         const answer: Observable<IUserSession> = this._http.get<IUserSession>(
             `/openSession/?userName=${userName},hash=${encryptedPass}`);
-
+        
         answer.subscribe((resp: IUserSession) => {
             this._cacher.cacheSession(resp.sessionId, encryptedPass);
             this._cacher.setCurrentSession(resp.sessionId);
