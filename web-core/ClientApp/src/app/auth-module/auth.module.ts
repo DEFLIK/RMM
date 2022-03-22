@@ -12,10 +12,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     imports: [
         CommonModule, 
         RouterModule,
-        ReactiveFormsModule
-    ], 
-    exports: [
-        LoginComponent, RegComponent
+        ReactiveFormsModule,
+        RouterModule.forChild([
+            { path: '', redirectTo: 'login' },
+            { path: 'login', component: LoginComponent },
+            { path: 'register', component: RegComponent }
+        ]),
     ]
 })
 export class AuthModule { }

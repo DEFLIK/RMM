@@ -7,14 +7,18 @@ import { AuthService } from '../../services/auth/auth.service';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
     public loginForm: FormGroup = new FormGroup({
         userName: new FormControl('', Validators.required),
         userPassword: new FormControl('', Validators.required)
-    });;
+    });
 
     constructor(private _auth: AuthService) { 
+    }
+
+    public ngOnInit(): void {
+        this._auth.tryAutoAuthorize();
     }
 
     public submit(): void {
