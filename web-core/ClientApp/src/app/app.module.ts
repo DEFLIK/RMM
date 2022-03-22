@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { Component, NgModule, NgModuleFactory } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadChildrenCallback, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -12,6 +12,7 @@ import { DevicesPanelModule } from './devicePanel-module/devices-panel.module';
 import { DevicesListComponent } from './devicePanel-module/components/devices-list/devices-list.component';
 import { DevicesPanelComponent } from './devicePanel-module/devices-panel.component';
 import { AuthGuard } from './auth-module/guards/auth.guard';
+import { AuthInterceptor } from './auth-module/services/auth/auth.interceptor';
 
 @NgModule({
     declarations: [
@@ -34,7 +35,14 @@ import { AuthGuard } from './auth-module/guards/auth.guard';
             }
         ], { relativeLinkResolution: 'legacy' })
     ],
-    providers: [AuthGuard],
+    providers: [
+        AuthGuard,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

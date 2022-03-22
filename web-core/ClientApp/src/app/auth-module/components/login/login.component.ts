@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
     constructor(private _auth: AuthService) { 
     }
 
-    public ngOnInit(): void {
-        this._auth.tryAutoAuthorize();
+    public async ngOnInit(): Promise<void> {
+        await this._auth.tryAutoAuthorize();
     }
 
     public submit(): void {

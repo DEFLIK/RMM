@@ -9,8 +9,9 @@ namespace web_core.Services.AuthService
 {
     public interface IAuthService
     {
-        public Task<User> OpenSessionAsync(string userName, string hash);
-        public Task<User> CloseSessionAsync(string userName, string hash);
-        public Task<User> RegisterNewUserAsync(string userName, string email, string hash);
+        public Task<Session> OpenSessionAsync(string userName, string hash);
+        public Task CloseSessionAsync(string token);
+        public Task RegisterNewUserAsync(string userName, string email, string hash);
+        public Task<bool> IsSessionOpenAsync(string token);
     }
 }

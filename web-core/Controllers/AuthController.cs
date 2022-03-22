@@ -26,8 +26,8 @@ namespace web_core.Controllers
         {
             try
             {
-                var user = await _serivce.OpenSessionAsync(userName, hash);
-                return Ok(GetUserSessionJson(user));
+                var session = await _serivce.OpenSessionAsync(userName, hash);
+                return Ok(GetSessionJson(session));
             }
             catch (Exception e)
             {
@@ -44,21 +44,19 @@ namespace web_core.Controllers
         }
 
         [HttpGet("closeSession")]
-        public async Task<ActionResult<string>> CloseSessionAsync(string userName, string hash)
+        public async Task<ActionResult<string>> CloseSessionAsync(string token)
         {
             try
             {
-                var user = await _serivce.CloseSessionAsync(userName, hash);
-                return Ok(GetUserSessionJson(user));
+                await _serivce.CloseSessionAsync(token);
+                return Ok();
             }
             catch (Exception e)
             {
                 switch (e)
                 {
                     case KeyNotFoundException _:
-                        return NotFound($"There is no registred user with name = '{userName}'");
-                    case ArgumentException _:
-                        return BadRequest("Wrong password");
+                        return NotFound("There is no such active session");
                     default:
                         throw;
                 }
@@ -70,8 +68,8 @@ namespace web_core.Controllers
         {
             try
             {
-                var user = await _serivce.RegisterNewUserAsync(userName, email, hash);
-                return Ok(GetUserSessionJson(user));
+                await _serivce.RegisterNewUserAsync(userName, email, hash);
+                return Ok();
             }
             catch (ArgumentException)
             {
@@ -79,7 +77,14 @@ namespace web_core.Controllers
             }
         }
 
-        private static string GetUserSessionJson(User user) =>
-            $"{{\"name\": \"{user.Name}\", \"hash\": \"{user.Hash}\"}}";
+        [HttpGet("isSessionOpen")]
+        public async Task<ActionResult<bool>> IsSessionOpen(string token)
+        {
+            //var token = Request.Headers["authorization"].ToString();
+            return await _serivce.IsSessionOpenAsync(token);
+        }
+
+        private static string GetSessionJson(Session session) =>
+            $"{{\"token\": \"{session.Token}\", \"expireAt\": \"{session.ExpireAt}\"}}";
     }
 }

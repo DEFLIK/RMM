@@ -1,47 +1,34 @@
 import { Injectable } from '@angular/core';
+import { ISession } from '../../interfaces/ISession';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SessionCacheService {
-    private get currSessionId(): string {
-        return localStorage.getItem('selectedSessionId');
-    }
-
-    private set currSessionId(value: string) {
-        localStorage.setItem('selectedSessionId', value);
-    }
+    private _sessionIdentifier: string = 'session';
 
     constructor() {}
 
-    public cacheSession(sessionId: string, hash: string): void {
-        localStorage.setItem(sessionId, hash);
+    public cacheSession(session: ISession): void {
+        localStorage.setItem(this._sessionIdentifier, JSON.stringify(session));
     }
 
-    public setCurrentSession(sessionId: string): void {
-        this.currSessionId = sessionId;
+    public removeSession(): ISession {
+        var empty: ISession = { expireAt: '', token: '' };
+        this.cacheSession(empty);
+
+        return empty;
     }
 
-    public getCurrentSessionHash(): string {
-        if (this.currSessionId === '') {
-            throw new Error(`Failed to get session hash: there is no binded sessions`);
+    public getSession(): ISession {
+        var session: string = localStorage.getItem(this._sessionIdentifier);
+
+        if (session !== null) {
+            console.log('parsed json:', JSON.parse(session));
+
+            return (JSON.parse(session) as ISession); 
         }
 
-        return localStorage.getItem(this.currSessionId);
-    }
-
-    public getCurrentSessionId(): string {
-        return this.currSessionId;
-    }
-
-    public removeSession(sessionId: string): void {
-        if (localStorage.getItem(sessionId) === null) {
-            throw new Error(`Failed to remove session ${sessionId}, there is no such`);
-        }
-
-        localStorage.removeItem(sessionId);
-        if (this.currSessionId === sessionId) {
-            this.currSessionId = '';
-        }
+        this.removeSession();
     }
 }

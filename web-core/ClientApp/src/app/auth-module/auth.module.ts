@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegComponent } from './components/reg/reg.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthInterceptor } from './services/auth/auth.interceptor';
 
 
 

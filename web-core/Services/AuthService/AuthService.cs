@@ -20,42 +20,42 @@ namespace web_core.Services.AuthService
 
         /// <exception cref="KeyNotFoundException"></exception>
         /// /// <exception cref="ArgumentException"></exception>
-        public async Task<User> OpenSessionAsync(string userName, string hash)
+        public async Task<Session> OpenSessionAsync(string userName, string hash)
         {
-            var user = _dbRepository.Get<User>(usr => usr.Name == userName).FirstOrDefault();
+            var user = await _dbRepository.Get<User>(usr => usr.Name == userName).FirstOrDefaultAsync();
             if (user == null)
                 throw new KeyNotFoundException();
             if (user.Hash != hash)
                 throw new ArgumentException();
 
-            user.IsSessionActive = true;
-            await _dbRepository.Update(user);
+
+            var session = new Session()
+            {
+                Token = Guid.NewGuid().ToString(), // change to bearer
+                ExpireAt = DateTime.Now.AddSeconds(60)
+            };
+
+            await _dbRepository.Add(session);
             await _dbRepository.SaveChangesAsync();
 
-            return user;
+            return session;
         }
 
         /// <exception cref="KeyNotFoundException"></exception>
-        /// <exception cref="ArgumentException"></exception>
-        public async Task<User> CloseSessionAsync(string userName, string hash)
+        public async Task CloseSessionAsync(string token)
         {
-            var user = _dbRepository.Get<User>(usr => usr.Name == userName).FirstOrDefault();
-            if (user == null)
+            var session = await _dbRepository.Get<Session>(ses => ses.Token == token).FirstOrDefaultAsync();
+            if (session == null)
                 throw new KeyNotFoundException();
-            if (user.Hash != hash)
-                throw new ArgumentException();
 
-            user.IsSessionActive = false;
-            await _dbRepository.Update(user);
+            await _dbRepository.Remove(session);
             await _dbRepository.SaveChangesAsync();
-
-            return user;
         }
 
         /// <exception cref="ArgumentException"></exception>
-        public async Task<User> RegisterNewUserAsync(string userName, string email, string hash)
+        public async Task RegisterNewUserAsync(string userName, string email, string hash)
         {
-            var user = _dbRepository.Get<User>(usr => usr.Name == userName).FirstOrDefault();
+            var user = await _dbRepository.Get<User>(usr => usr.Name == userName).FirstOrDefaultAsync();
             if (user != null)
                 throw new ArgumentException();
 
@@ -68,8 +68,20 @@ namespace web_core.Services.AuthService
 
             await _dbRepository.Add(newUser);
             await _dbRepository.SaveChangesAsync();
+        }
 
-            return newUser;
+        public async Task<bool> IsSessionOpenAsync(string token)
+        {
+            var session = await _dbRepository.Get<Session>(ses => ses.Token == token).FirstOrDefaultAsync();
+            if (session == null)
+                return false;
+
+            var isExpired = session.ExpireAt < DateTime.Now;
+
+            if (isExpired)
+                await CloseSessionAsync(session.Token);
+
+            return !isExpired;
         }
     }
 }
