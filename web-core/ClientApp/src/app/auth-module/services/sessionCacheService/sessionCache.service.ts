@@ -24,8 +24,6 @@ export class SessionCacheService {
         var session: string = localStorage.getItem(this._sessionIdentifier);
 
         if (session !== null) {
-            console.log('parsed json:', JSON.parse(session));
-
             return (JSON.parse(session) as ISession); 
         }
 

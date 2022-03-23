@@ -4,6 +4,8 @@ import { DevicesListComponent } from './components/devices-list/devices-list.com
 import { RouterModule } from '@angular/router';
 import { DevicesPanelComponent } from './devices-panel.component';
 import { AuthGuard } from '../auth-module/guards/auth.guard';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '../auth-module/services/auth/auth.interceptor';
 
 @NgModule({
     declarations: [
@@ -19,7 +21,14 @@ import { AuthGuard } from '../auth-module/guards/auth.guard';
             }
         ])
     ],
-    bootstrap: [DevicesPanelComponent]
+    bootstrap: [DevicesPanelComponent],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        }
+    ]
 })
 export class DevicesPanelModule {
 }

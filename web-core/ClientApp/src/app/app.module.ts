@@ -36,12 +36,7 @@ import { AuthInterceptor } from './auth-module/services/auth/auth.interceptor';
         ], { relativeLinkResolution: 'legacy' })
     ],
     providers: [
-        AuthGuard,
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
-            multi: true
-        }
+        AuthGuard
     ],
     bootstrap: [AppComponent]
 })

@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { concat, Observable, of, throwError } from 'rxjs';
+import { catchError, concatMap, delay, retry, retryWhen, take } from 'rxjs/operators';
 import { ISession } from '../../interfaces/ISession';
 import { SessionCacheService } from '../sessionCacheService/sessionCache.service';
 import { EncryptionService } from '../encrypt/encryption.service';
@@ -21,16 +22,18 @@ export class AuthService {
 
     public async registerNewUserAsync(userName: string, email: string, pass: string): Promise<void> {
         const encryptedPass: string = await this._encr.encryptStringAsync(pass);
-        const answer: Observable<void> = this._http.get<void>(
-            `api/auth/registerNewUser?userName=${userName}&email=${email}&hash=${encryptedPass}`);
+        const answer: Observable<void> = this.request(
+            `api/auth/registerNewUser?userName=${userName}&email=${email}&hash=${encryptedPass}`
+        );
 
         answer.subscribe(() => this.openSessionAsync(userName, pass));
     }
 
     public async openSessionAsync(userName: string, pass: string): Promise<void> {
         const encryptedPass: string = await this._encr.encryptStringAsync(pass);
-        const answer: Observable<ISession> = this._http.get<ISession>(
-            `api/auth/openSession?userName=${userName}&hash=${encryptedPass}`);
+        const answer: Observable<ISession> = this.request<ISession>(
+            `api/auth/openSession?userName=${userName}&hash=${encryptedPass}`
+        );
         
         answer.subscribe((resp: ISession) => {
             this.isAuthorized = true;
@@ -40,8 +43,9 @@ export class AuthService {
     }
 
     public closeSession(session: ISession): void {
-        const answer: Observable<void> = this._http.get<void>(
-            `api/auth/closeSession?sessionToken=${session.token}`);
+        const answer: Observable<void> = this.request<void>(
+            `api/auth/closeSession?sessionToken=${session.token}`
+        );
         
         answer.subscribe(() => {
             this.isAuthorized = false;
@@ -61,7 +65,20 @@ export class AuthService {
     }
 
     public isSessionOpen(session: ISession): Observable<boolean> {
-        return this._http.get<boolean>(
-            `api/auth/isSessionOpen?token=${session.token}`);
+        return this.request<boolean>(`api/auth/isSessionOpen?token=${session.token}`);
+    }
+
+    private request<T>(url: string): Observable<T>{
+        return this._http.get<T>(
+            url)
+            .pipe(
+                catchError(this.handleError)
+            );
+    }
+
+    private handleError(response: HttpErrorResponse): Observable<never> {
+        console.log(response.error);
+
+        return of();
     }
 }
