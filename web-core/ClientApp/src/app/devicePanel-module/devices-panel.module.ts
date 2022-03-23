@@ -6,11 +6,13 @@ import { DevicesPanelComponent } from './devices-panel.component';
 import { AuthGuard } from '../auth-module/guards/auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../auth-module/services/auth/auth.interceptor';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
     declarations: [
         DevicesListComponent,
-        DevicesPanelComponent
+        DevicesPanelComponent,
+        HeaderComponent
     ],
     imports: [
         CommonModule,

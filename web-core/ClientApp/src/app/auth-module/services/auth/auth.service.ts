@@ -42,9 +42,13 @@ export class AuthService {
         });
     }
 
+    public closeCurrentSession(): void {
+        this.closeSession(this._cacher.getSession());
+    }
+
     public closeSession(session: ISession): void {
         const answer: Observable<void> = this.request<void>(
-            `api/auth/closeSession?sessionToken=${session.token}`
+            `api/auth/closeSession?token=${session.token}`
         );
         
         answer.subscribe(() => {
