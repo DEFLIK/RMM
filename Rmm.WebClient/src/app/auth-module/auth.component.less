@@ -1,0 +1,82 @@
+@import (reference) "/src/styles.less";
+
+.auth {
+    background-color: @color-bg;
+    border: solid @color-main 2px;
+    padding: 5px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 250px;
+
+    &-logo {
+        text-align: center;
+        color: @color-main;
+        font-size: 60px;
+    }
+
+    &-title {
+        color: @color-main;
+        font-size: 20px;
+    }
+
+    &-anchor {
+        text-decoration: none;
+        font-size: 15px;
+
+        &:link {
+            color: @color-active;
+        }
+
+        &:visited {
+            color: @color-used;
+        }
+
+        &:hover {
+            color: @color-hover;
+        }
+    }
+
+    &-form {
+        display: flex;
+        gap: 5px;
+        flex-direction: column;
+        align-items: center;
+
+        &-alert {
+            color: @color-alert;
+        }
+
+        &-input {
+            font-size: 20px;
+            width: 80%;
+            height: 30px;
+            background-color: transparent;
+            border: none;
+            border-bottom: solid @color-main 1.5px;
+
+            &:focus {
+                outline: none;
+                border-bottom: solid @color-hover 1.5px;
+            }
+        }
+
+        &-button {
+            font-size: 20px;
+            width: 50%;
+            background-color: transparent;
+            border: solid 2px @color-main;
+            border-radius: 5px;
+            color: @color-main;
+            cursor: pointer;
+
+            &:hover {
+                color: @color-hover;
+                border-color: @color-hover;
+            }
+        }
+    }
+}

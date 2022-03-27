@@ -1,21 +1,24 @@
-<p>reg works!</p>
-<form [formGroup] = "regForm">
-    <input type="text" name="name" placeholder="Username" formControlName="userName">
-    <input type="text" name="email" placeholder="Email" formControlName="userEmail">
-    <input type="password" name="password" placeholder="Password" formControlName="userPassword">
-</form>
-<div
-    class="alert alert-danger"
-    *ngIf="
-        ((regForm.controls['userName'].invalid) ||
-        (regForm.controls['userPassword'].invalid) ||
-        (regForm.controls['userEmail'].invalid));
-        else allowed
-    "
->
-    Please complete all fields
+<p class="auth-logo">RMM</p>
+<p class="auth-title">Registration</p>
+<div class="auth">
+    <form class="auth-form" [formGroup] = "regForm">
+        <input class="auth-form-input" type="text" name="name" placeholder="Username" formControlName="userName">
+        <input class="auth-form-input" type="text" name="email" placeholder="Email" formControlName="userEmail">
+        <input class="auth-form-input" type="password" name="password" placeholder="Password" formControlName="userPassword">
+    </form>
+    <div
+        class="auth-form-alert"
+        *ngIf="
+            ((regForm.controls['userName'].invalid) ||
+            (regForm.controls['userPassword'].invalid) ||
+            (regForm.controls['userEmail'].invalid));
+            else allowed
+        "
+    >
+        Please complete all fields
+    </div>
+    <ng-template #allowed>
+        <button class="auth-form-button" (click)="submit()">Create account</button>
+    </ng-template>
+    <a class="auth-anchor" [routerLink] = "'/auth/login'">Already in?</a>
 </div>
-<ng-template #allowed>
-    <button (click)="submit()">Create account</button>
-</ng-template>
-<button [routerLink] = "'/auth/login'">Back to login</button>

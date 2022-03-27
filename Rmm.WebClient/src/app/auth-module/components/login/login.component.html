@@ -1,11 +1,12 @@
-<p>login works!</p>
+<p class="auth-logo">RMM</p>
+<p class="auth-title">Login</p>
 <div class="auth">
-    <form [formGroup] = "loginForm">
-        <input type="text" name="name" placeholder="Username" formControlName="userName">
-        <input type="password" name="password" placeholder="Password" formControlName="userPassword">
+    <form class="auth-form" [formGroup] = "loginForm">
+        <input class="auth-form-input" type="text" name="name" placeholder="Username" formControlName="userName">
+        <input class="auth-form-input" type="password" name="password" placeholder="Password" formControlName="userPassword">
     </form>
     <div
-        class="alert alert-danger"
+        class="auth-form-alert"
         *ngIf="
             ((loginForm.controls['userName'].invalid &&
             loginForm.controls['userName'].touched) ||
@@ -17,7 +18,7 @@
         Please complete all fields
     </div>
     <ng-template #allowed>
-        <button (click)="submit()">Confirm</button>
+        <button class="auth-form-button" (click)="submit()">Confirm</button>
     </ng-template>
-    <button [routerLink] = "'/auth/register'">No account?</button>
+    <a class="auth-anchor" [routerLink] = "'/auth/register'">No account?</a>
 </div>
