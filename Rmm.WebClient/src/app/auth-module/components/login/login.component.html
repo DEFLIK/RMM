@@ -1,0 +1,23 @@
+<p>login works!</p>
+<div class="auth">
+    <form [formGroup] = "loginForm">
+        <input type="text" name="name" placeholder="Username" formControlName="userName">
+        <input type="password" name="password" placeholder="Password" formControlName="userPassword">
+    </form>
+    <div
+        class="alert alert-danger"
+        *ngIf="
+            ((loginForm.controls['userName'].invalid &&
+            loginForm.controls['userName'].touched) ||
+            (loginForm.controls['userPassword'].invalid &&
+            loginForm.controls['userPassword'].touched));
+            else allowed
+        "
+    >
+        Please complete all fields
+    </div>
+    <ng-template #allowed>
+        <button (click)="submit()">Confirm</button>
+    </ng-template>
+    <button [routerLink] = "'/auth/register'">No account?</button>
+</div>

@@ -22,6 +22,9 @@ _UpgradeReport_Files/
 ###############
 # Directories #
 ###############
+web-core/
+web-tests/
+DAL/
 bin/
 obj/
 TestResults/
