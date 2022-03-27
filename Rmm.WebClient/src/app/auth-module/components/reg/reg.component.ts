@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth/auth.service';
 @Component({
     selector: 'app-reg',
     templateUrl: './reg.component.html',
-    styleUrls: ['./reg.component.css']
+    styleUrls: ['./reg.component.less']
 })
 export class RegComponent {
     
