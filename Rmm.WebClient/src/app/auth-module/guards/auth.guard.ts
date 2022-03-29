@@ -13,39 +13,33 @@ export class AuthGuard implements CanActivate, CanLoad, CanActivateChild {
         private _router: Router
     ) {}
 
-    public canActivate(
+    public async canActivate(
         route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        if (this._auth.isAuthorized) {
-            return true; 
-        } else {
-            this._router.navigateByUrl('');
-
-            return false;
+        state: RouterStateSnapshot): Promise<boolean> {
+        if (!this._auth.isAuthorized) {
+            await this._router.navigateByUrl('');
         }
+
+        return this._auth.isAuthorized;
     }
 
-    public canLoad(
+    public async canLoad(
         route: Route, 
-        segments: UrlSegment[]): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-        if (this._auth.isAuthorized) {
-            return true; 
-        } else {
-            this._router.navigateByUrl('');
-
-            return false;
+        segments: UrlSegment[]): Promise<boolean> {
+        if (!this._auth.isAuthorized) {
+            await this._router.navigateByUrl('');
         }
+
+        return this._auth.isAuthorized;
     }
 
-    public canActivateChild(
+    public async canActivateChild(
         childRoute: ActivatedRouteSnapshot, 
-        state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-        if (this._auth.isAuthorized) {
-            return true; 
-        } else {
-            this._router.navigateByUrl('');
-
-            return false;
+        state: RouterStateSnapshot): Promise<boolean> {
+        if (!this._auth.isAuthorized) {
+            await this._router.navigateByUrl('');
         }
+
+        return this._auth.isAuthorized;
     }
 }

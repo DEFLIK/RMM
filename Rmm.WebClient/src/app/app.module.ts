@@ -13,6 +13,7 @@ import { DevicesListComponent } from './devicePanel-module/components/devices-li
 import { DevicesPanelComponent } from './devicePanel-module/devices-panel.component';
 import { AuthGuard } from './auth-module/guards/auth.guard';
 import { AuthInterceptor } from './auth-module/services/auth/auth.interceptor';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
     declarations: [
@@ -22,25 +23,7 @@ import { AuthInterceptor } from './auth-module/services/auth/auth.interceptor';
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,
         FormsModule,
-        RouterModule.forRoot([
-            { 
-                path: '', 
-                redirectTo: 'auth',
-                pathMatch: 'full'
-            },
-            { 
-                path: 'devices', 
-                canLoad: [AuthGuard],
-                loadChildren: () => import('./devicePanel-module/devices-panel.module').then(m => m.DevicesPanelModule)
-            },
-            { 
-                path: 'auth', 
-                loadChildren: () => import('./auth-module/auth.module').then(m => m.AuthModule) 
-            }
-        ], { relativeLinkResolution: 'legacy' })
-    ],
-    providers: [
-        AuthGuard
+        AppRoutingModule
     ],
     bootstrap: [AppComponent]
 })
