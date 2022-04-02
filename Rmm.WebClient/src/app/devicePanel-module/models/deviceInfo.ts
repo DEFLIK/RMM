@@ -1,9 +1,9 @@
-import { IDeviceStatus } from '../enums/IDeviceStatus';
+import { DeviceStatus } from '../enums/deviceStatus';
 
-export interface DeviceInfo {
+export interface IDeviceInfo {
     id: string;
     name: string;
-    status: IDeviceStatus;
+    status: DeviceStatus;
     os: string;
     coordinates: string[];
     runTimeS: number
