@@ -1,4 +1,4 @@
-export enum IDeviceStatus {
+export enum DeviceStatus {
     enabled,
     disabled,
     sleep,
