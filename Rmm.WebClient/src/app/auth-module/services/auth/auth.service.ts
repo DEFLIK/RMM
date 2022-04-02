@@ -6,6 +6,7 @@ import { ISession } from '../../interfaces/ISession';
 import { SessionCacheService } from '../sessionCacheService/sessionCache.service';
 import { EncryptionService } from '../encrypt/encryption.service';
 import { Router } from '@angular/router';
+import { RequestService } from 'src/app/global-services/request/request.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthService {
     public isAuthorized: boolean = false;
 
     constructor(
-        private _http: HttpClient,
+        private _req: RequestService,
         private _encr: EncryptionService,
         private _cacher: SessionCacheService,
         private _router: Router
@@ -22,7 +23,7 @@ export class AuthService {
 
     public async registerNewUserAsync(userName: string, email: string, pass: string): Promise<void> {
         const encryptedPass: string = await this._encr.encryptStringAsync(pass);
-        const answer: Observable<void> = this.request(
+        const answer: Observable<void> = this._req.delete(
             `api/auth/registerNewUser?userName=${userName}&email=${email}&hash=${encryptedPass}`
         );
 
@@ -31,7 +32,7 @@ export class AuthService {
 
     public async openSessionAsync(userName: string, pass: string): Promise<void> {
         const encryptedPass: string = await this._encr.encryptStringAsync(pass);
-        const answer: Observable<ISession> = this.request<ISession>(
+        const answer: Observable<ISession> = this._req.delete<ISession>(
             `api/auth/openSession?userName=${userName}&hash=${encryptedPass}`
         );
         
@@ -47,7 +48,7 @@ export class AuthService {
     }
 
     public closeSession(session: ISession): void {
-        const answer: Observable<void> = this.request<void>(
+        const answer: Observable<void> = this._req.delete<void>(
             `api/auth/closeSession?token=${session.token}`
         );
         
@@ -69,20 +70,6 @@ export class AuthService {
     }
 
     public isSessionOpen(session: ISession): Observable<boolean> {
-        return this.request<boolean>(`api/auth/isSessionOpen?token=${session.token}`);
-    }
-
-    private request<T>(url: string): Observable<T>{
-        return this._http.get<T>(
-            url)
-            .pipe(
-                catchError(this.handleError)
-            );
-    }
-
-    private handleError(response: HttpErrorResponse): Observable<never> {
-        console.log(response.error);
-
-        return of();
+        return this._req.delete<boolean>(`api/auth/isSessionOpen?token=${session.token}`);
     }
 }
