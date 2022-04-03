@@ -1,10 +1,9 @@
 import { DeviceStatus } from '../enums/deviceStatus';
 
-export interface IDeviceInfo {
-    id: string;
-    name: string;
-    status: DeviceStatus;
-    os: string;
-    coordinates: string[];
-    runTimeS: number
+export class DeviceInfo {
+    public name?: string;
+    public status?: DeviceStatus;
+    public os?: string;
+    public coordinates?: string[];
+    public runTimeS?: number;
 }
