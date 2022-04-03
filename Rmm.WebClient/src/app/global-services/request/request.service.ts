@@ -9,24 +9,24 @@ export class RequestService {
 
     constructor(private _http: HttpClient) { }
 
-    public delete<T>(url: string): Observable<T>{
-        return this._http.get<T>(
+    public get<TResponse>(url: string): Observable<TResponse>{
+        return this._http.get<TResponse>(
             url)
             .pipe(
                 catchError(this.handleError)
             );
     }
 
-    public remove<T>(url: string): Observable<T>{
-        return this._http.delete<T>(
+    public delete<TResponse>(url: string): Observable<TResponse>{
+        return this._http.delete<TResponse>(
             url)
             .pipe(
                 catchError(this.handleError)
             );
     }
 
-    public put<T>(url: string, entity: T): Observable<T>{
-        return this._http.put<T>(
+    public put<TResponse, TRequest>(url: string, entity: TRequest): Observable<TResponse> {
+        return this._http.put<TResponse>(
             url, entity)
             .pipe(
                 catchError(this.handleError)
