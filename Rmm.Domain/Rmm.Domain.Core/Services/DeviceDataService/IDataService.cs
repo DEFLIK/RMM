@@ -6,9 +6,10 @@ namespace Rmm.Domain.Core.Services.DeviceDataService
 {
     public interface IDataService<T> where T : class, IEntity
     {
-        public Task<Guid> Create(T lead);
+        public Task<Guid> Create(T entity);
         public Task<T> Get(Guid id);
-        public Task Update(T lead);
-        public Task Delete(Guid leadId);
+        public Task<T[]> GetRange(int start, int count);
+        public Task Update(T entity);
+        public Task Delete(Guid id);
     }
 }

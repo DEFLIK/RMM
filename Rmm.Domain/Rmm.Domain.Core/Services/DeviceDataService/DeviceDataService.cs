@@ -17,13 +17,6 @@ namespace Rmm.Domain.Core.Services.DeviceDataService
 
         public async Task<Guid> Create(DeviceInfo entity)
         {
-            //var entity = _mapper.Map<LeadEntity>(lead);
-            //entity.UserCreated = _currentUser.Id;
-
-            //var result = await _dbRepository.Add(entity);
-            //await _dbRepository.SaveChangesAsync();
-
-            //return result;
             var id = await _dbRepository.Add(entity);
             await _dbRepository.SaveChangesAsync();
             return id;
@@ -35,18 +28,23 @@ namespace Rmm.Domain.Core.Services.DeviceDataService
             return entity;
         }
 
+        public async Task<DeviceInfo[]> GetRange(int start, int count)
+        {
+            return await _dbRepository.GetRange<DeviceInfo>(start, count).ToArrayAsync();
+        }
+
         public async Task Update(DeviceInfo entity)
         {
-            //var entity = _mapper.Map<LeadEntity>(lead);
-
-            //await _dbRepository.Update(entity);
-            //await _dbRepository.SaveChangesAsync();
+            await _dbRepository.Update(entity);
+            await _dbRepository.SaveChangesAsync();
         }
 
         public async Task Delete(Guid id)
         {
-            //await _dbRepository.Delete<LeadEntity>(leadId);
-            //await _dbRepository.SaveChangesAsync();
+            var entity = await Get(id);
+
+            await _dbRepository.Remove(entity);
+            await _dbRepository.SaveChangesAsync();
         }
     }
 }
