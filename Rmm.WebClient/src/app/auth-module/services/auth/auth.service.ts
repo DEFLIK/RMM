@@ -23,7 +23,7 @@ export class AuthService {
 
     public async registerNewUserAsync(userName: string, email: string, pass: string): Promise<void> {
         const encryptedPass: string = await this._encr.encryptStringAsync(pass);
-        const answer: Observable<void> = this._req.delete(
+        const answer: Observable<void> = this._req.get(
             `api/auth/registerNewUser?userName=${userName}&email=${email}&hash=${encryptedPass}`
         );
 
@@ -32,7 +32,7 @@ export class AuthService {
 
     public async openSessionAsync(userName: string, pass: string): Promise<void> {
         const encryptedPass: string = await this._encr.encryptStringAsync(pass);
-        const answer: Observable<ISession> = this._req.delete<ISession>(
+        const answer: Observable<ISession> = this._req.get<ISession>(
             `api/auth/openSession?userName=${userName}&hash=${encryptedPass}`
         );
         
@@ -48,7 +48,7 @@ export class AuthService {
     }
 
     public closeSession(session: ISession): void {
-        const answer: Observable<void> = this._req.delete<void>(
+        const answer: Observable<void> = this._req.get<void>(
             `api/auth/closeSession?token=${session.token}`
         );
         
@@ -70,6 +70,6 @@ export class AuthService {
     }
 
     public isSessionOpen(session: ISession): Observable<boolean> {
-        return this._req.delete<boolean>(`api/auth/isSessionOpen?token=${session.token}`);
+        return this._req.get<boolean>(`api/auth/isSessionOpen?token=${session.token}`);
     }
 }
