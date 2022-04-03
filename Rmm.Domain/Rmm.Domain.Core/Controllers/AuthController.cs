@@ -7,7 +7,7 @@ using Rmm.Domain.DAL.Entities;
 
 namespace Rmm.Domain.Core.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -11,34 +14,83 @@ namespace Rmm.Domain.Core.Controllers
     [ApiController]
     public class DeviceInfoController : ControllerBase
     {
-        private readonly IDataService<DeviceInfo> _serivce;
+        private readonly IDataService<DeviceInfo> _dataSerivce;
         public DeviceInfoController(IDataService<DeviceInfo> service)
         {
-            _serivce = service;
+            _dataSerivce = service;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<string>> GetDevice(Guid id)
+        [HttpPut("add")]
+        public async Task<ActionResult<Guid>> AddDevice()
         {
-            return Ok(JsonConvert.SerializeObject(await _serivce.Get(id)));
+            var stream = Request.Body;
+            var json = await new StreamReader(stream).ReadToEndAsync();
+
+            DeviceInfo device;
+            try
+            {
+                device = JsonConvert.DeserializeObject<DeviceInfo>(json);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+            await _dataSerivce.Create(device);
+
+            return Ok();
         }
 
-        //[HttpPost]
-        //public ActionResult<string> AddRandom()
-        //{
-        //    var rng = new Random();
-        //    var device = new DeviceInfo()
-        //    {
-        //        Coordinates = new[] { rng.Next(0, 50) + rng.NextDouble(), rng.Next(0, 50) + rng.NextDouble() },
-        //        Id = new Guid(),
-        //        Os = "Windows",
-        //        RunTimeS = rng.Next(0, 10000),
-        //        Status = (DeviceStatus)rng.Next(0, 5)
-        //    };
-        //    device.Name = "pc-" + device.Id.ToString().Substring(0, 5);
-        //    _serivce.Create(device);
+        [HttpGet("get")]
+        public async Task<ActionResult<DeviceInfo>> GetDevice(Guid id)
+        {
+            var device = await _dataSerivce.Get(id);
 
-        //    return Ok(JsonConvert.SerializeObject(device));
-        //}
+            if (device is null)
+                return NotFound();
+
+            return Ok(device);
+        }
+
+        [HttpGet("getRange")]
+        public async Task<ActionResult<DeviceInfo[]>> GetRangeDevice(int start, int count)
+        {
+            var devices = await _dataSerivce.GetRange(start, count);
+
+            if (!devices.Any())
+                return NotFound();
+
+            return Ok(devices);
+        }
+
+
+        [HttpDelete("delete")]
+        public async Task<ActionResult> DeleteDevice(Guid id)
+        {
+            await _dataSerivce.Delete(id);
+
+            return Ok();
+        }
+
+        [HttpPut("update")]
+        public async Task<ActionResult> UpdateDevice()
+        {
+            var stream = Request.Body;
+            var json = await new StreamReader(stream).ReadToEndAsync();
+
+            DeviceInfo device;
+            try
+            {
+                device = JsonConvert.DeserializeObject<DeviceInfo>(json);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+            await _dataSerivce.Update(device);
+
+            return Ok();
+        }
     }
 }
