@@ -22,6 +22,11 @@ namespace Rmm.Domain.DAL.Repositories
             return _context.Set<T>().Where(x => x.IsActive).AsQueryable();
         }
 
+        public IQueryable<T> GetRange<T>(int start, int count) where T : class, IEntity
+        {
+            return _context.Set<T>().Skip(start).Take(count).AsQueryable();
+        }
+
         public IQueryable<T> Get<T>(Expression<Func<T, bool>> selector) where T : class, IEntity
         {
             return _context.Set<T>().Where(selector).Where(x => x.IsActive).AsQueryable();

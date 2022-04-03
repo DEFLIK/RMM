@@ -10,6 +10,7 @@ namespace Rmm.Domain.DAL.Interfaces
     {
         IQueryable<T> Get<T>(Expression<Func<T, bool>> selector) where T : class, IEntity;
         IQueryable<T> Get<T>() where T : class, IEntity;
+        IQueryable<T> GetRange<T>(int strat, int count) where T : class, IEntity;
         IQueryable<T> GetAll<T>() where T : class, IEntity;
 
         Task<Guid> Add<T>(T newEntity) where T : class, IEntity;
