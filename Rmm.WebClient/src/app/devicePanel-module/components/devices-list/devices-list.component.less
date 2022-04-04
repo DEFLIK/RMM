@@ -1,5 +1,50 @@
-.list {
-    width: 20%;
+@import (reference) "/src/styles.less";
+
+.devices {
     height: 100%;
-    background-color: aquamarine;
+    display: flex;
+    flex-flow: column;
+
+    &-controls {
+        flex: 0 0 40px;
+    }
+
+    &-list {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        overflow-y: auto;
+        background-color: rgb(156, 156, 156);
+    }
+
+    &-element {
+        padding: 5px;
+        flex: 0 0 60px;
+        background-color: white;
+        width: 90%;
+        font-size: 17px;
+        border-bottom: solid 3px white;
+    }
+}
+
+.blocked {
+    border-color: @color-alert;
+    color: @color-alert;
+}
+
+.enabled {
+    border-color: @color-active;
+    color: @color-active;
+}
+
+.disabled {
+    border-color: @color-empty;
+    color: @color-empty;
+}
+
+.sleep {
+    border-color: @color-empty;
+    color: @color-empty;
 }

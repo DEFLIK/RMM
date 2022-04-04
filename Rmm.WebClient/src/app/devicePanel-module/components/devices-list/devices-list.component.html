@@ -1,3 +1,22 @@
-<div class="list">
+<div class="devices">
+    <div class="devices-controls">
+        <button (click)="addRandomDevice()">Add random</button>
+        <button (click)="loadMoreDevices()">Load more</button>
+        <button (click)="updateDevicesInfo()">Update</button>
+    </div>
     
+    <div class="devices-list">
+        <app-device-element 
+            *ngFor="let device of devices" 
+            #device
+            class="devices-element" 
+            [deviceInfo]="device"
+            [ngClass]="{
+                'enabled': device.status === statusTypes.enabled,
+                'disabled': device.status === statusTypes.disabled,
+                'blocked': device.status === statusTypes.blocked,
+                'sleep': device.status === statusTypes.sleep
+            }" >
+        </app-device-element>
+    </div>
 </div>
