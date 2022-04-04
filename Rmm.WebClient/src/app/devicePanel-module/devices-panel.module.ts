@@ -7,11 +7,15 @@ import { AuthGuard } from '../auth-module/guards/auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../auth-module/services/auth/auth.interceptor';
 import { HeaderComponent } from './components/header/header.component';
+import { DeviceElementComponent } from './components/device-element/device-element.component';
+import { SecondsRoundPipe } from './pipes/seconds-round.pipe';
 @NgModule({
     declarations: [
         DevicesListComponent,
         DevicesPanelComponent,
-        HeaderComponent
+        HeaderComponent,
+        DeviceElementComponent,
+        SecondsRoundPipe
     ],
     imports: [
         CommonModule,
