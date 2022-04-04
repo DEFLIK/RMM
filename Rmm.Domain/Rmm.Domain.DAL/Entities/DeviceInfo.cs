@@ -1,4 +1,5 @@
-﻿using Rmm.Domain.DAL.Enums;
+﻿using System;
+using Rmm.Domain.DAL.Enums;
 
 namespace Rmm.Domain.DAL.Entities
 {
