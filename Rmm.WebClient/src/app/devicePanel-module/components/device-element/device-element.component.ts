@@ -18,7 +18,7 @@ export class DeviceElementComponent implements OnInit {
         interval(1000)
             .subscribe(() => {
                 if (this.deviceInfo) {
-                    this.deviceInfo.elapsedAnswerSeconds += 1; 
+                    this.deviceInfo.lastAnswerTime += 1; 
                 }
             });
     }

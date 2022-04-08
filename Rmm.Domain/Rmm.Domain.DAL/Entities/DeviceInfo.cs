@@ -10,6 +10,6 @@ namespace Rmm.Domain.DAL.Entities
         public string Os { get; set; }
         public double[] Coordinates { get; set; }
         public int RunTimeS { get; set; }
-        public DateTime LastAnswerTime { get; set; }
+        public double LastAnswerTime { get; set; }
     }
 }
