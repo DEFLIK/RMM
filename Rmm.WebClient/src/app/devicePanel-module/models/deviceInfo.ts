@@ -7,4 +7,5 @@ export class DeviceInfo {
     public os?: string;
     public coordinates?: string[];
     public runTimeS?: number;
+    public elapsedAnswerSeconds!: number;
 }
