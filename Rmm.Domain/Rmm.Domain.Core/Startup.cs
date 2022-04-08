@@ -46,7 +46,7 @@ namespace Rmm.Domain.Core
                     Configuration.GetConnectionString("RmmConnection"),
                     assembly =>
                     {
-                        assembly.MigrationsAssembly("DAL");
+                        assembly.MigrationsAssembly("Rmm.Domain.DAL");
                     });
             });
 
