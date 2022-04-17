@@ -32,27 +32,25 @@ export class DevicesListComponent {
         return this._storage.elapsedUpdateSeconds;
     }
 
-    constructor(
-        private _info: DeviceInfoService,
-        private _storage: DevicesStorageService) { }
+    constructor(private _storage: DevicesStorageService) { }
 
-    public addRandomDevice(): void {
-        const device: DeviceInfo = new DeviceInfo();
-        device.os = `Windows`;
-        device.status = DeviceStatus.enabled;
-        device.coordinates = [
-            (Math.floor(Math.random() * 1000)).toString(),
-            (Math.floor(Math.random() * 1000)).toString()
-        ];
-        device.runTimeS = Math.floor(Math.random() * 1000);
-        device.name = `pc-${Math.floor(Math.random() * 1000)}`;
+    // public addRandomDevice(): void {
+    //     const device: DeviceInfo = new DeviceInfo();
+    //     device.os = `Windows`;
+    //     device.status = DeviceStatus.enabled;
+    //     device.coordinates = [
+    //         (Math.floor(Math.random() * 1000)).toString(),
+    //         (Math.floor(Math.random() * 1000)).toString()
+    //     ];
+    //     device.runTimeS = Math.floor(Math.random() * 1000);
+    //     device.name = `pc-${Math.floor(Math.random() * 1000)}`;
 
-        const ans: Observable<string> = this._info.add(device);
+    //     const ans: Observable<string> = this._info.add(device);
 
-        ans.subscribe((id: string) => {
-            console.log(id);
-        });
-    }
+    //     ans.subscribe((id: string) => {
+    //         console.log(id);
+    //     });
+    // }
 
     public loadMoreDevices(): void {
         this._storage.loadMoreDevices();
