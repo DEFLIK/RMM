@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Host, HostBinding, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Host, HostBinding, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { interval, Observable } from 'rxjs';
 import { DeviceInfo } from 'src/app/devicePanel-module/models/deviceInfo';
 import { DeviceStatus } from '../../enums/deviceStatus';
@@ -11,6 +11,8 @@ import { DeviceStatus } from '../../enums/deviceStatus';
 export class DeviceElementComponent {
     @Input()
     public deviceInfo!: DeviceInfo;
+    @Output()
+    public clickEvent: EventEmitter<DeviceInfo> = new EventEmitter<DeviceInfo>();
 
     constructor() { }
 
@@ -20,5 +22,11 @@ export class DeviceElementComponent {
 
     public disableDevice(): void {
         this.deviceInfo.status = DeviceStatus.disabled;
+    }
+
+    @HostListener('click')
+    public onClick(): void {
+        this.clickEvent.emit(this.deviceInfo);
+        console.log('click:', this.deviceInfo.name);
     }
 }

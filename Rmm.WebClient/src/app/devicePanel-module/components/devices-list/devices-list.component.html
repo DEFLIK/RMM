@@ -17,6 +17,7 @@
             *ngFor="let device of devices | deviceFilter : searchCriteria" 
             #device
             class="devices-element" 
+            (clickEvent)="selectDevice($event)"
             [deviceInfo]="device"
             [ngClass]="{
                 'enabled': device.status === statusTypes.enabled,

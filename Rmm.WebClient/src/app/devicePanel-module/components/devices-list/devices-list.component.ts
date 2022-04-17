@@ -17,6 +17,7 @@ export class DevicesListComponent implements OnInit {
     public devices: DeviceInfo[] = new Array<DeviceInfo>();
     public statusTypes: typeof DeviceStatus = DeviceStatus;
     public elapsedUpdateSeconds: number = 0;
+    public selectedDevice?: DeviceInfo;
     public settingsForm: FormGroup = new FormGroup({
         searchInput: new FormControl('')
     });
@@ -81,5 +82,10 @@ export class DevicesListComponent implements OnInit {
                     el.updateInfo(ansDevice);
                 });
         });
+    }
+
+    public selectDevice(device: DeviceInfo): void {
+        console.log('selected:', device);
+        this.selectedDevice = device;
     }
 }
