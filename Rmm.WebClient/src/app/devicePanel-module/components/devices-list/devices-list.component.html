@@ -1,4 +1,11 @@
 <div class="devices">
+    <form class="devices-settings" [formGroup]="settingsForm">
+        <input type="text" class="devices-search" formControlName="searchInput">
+
+    </form>
+    <div class="devices-update-time">
+        {{ elapsedUpdateSeconds | secondsRound : 10 }}
+    </div>
     <div class="devices-controls">
         <button (click)="addRandomDevice()">Add random</button>
         <button (click)="loadMoreDevices()">Load more</button>
@@ -7,7 +14,7 @@
     
     <div class="devices-list">
         <app-device-element 
-            *ngFor="let device of devices" 
+            *ngFor="let device of devices | deviceFilter : searchCriteria" 
             #device
             class="devices-element" 
             [deviceInfo]="device"

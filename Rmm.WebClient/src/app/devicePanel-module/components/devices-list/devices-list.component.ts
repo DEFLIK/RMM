@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
+import { catchError, interval, Observable, of } from 'rxjs';
 import { DeviceStatus } from '../../enums/deviceStatus';
 import { DeviceInfo } from '../../models/deviceInfo';
 import { DeviceInfoService } from '../../services/deviceInfo/device-info.service';
@@ -10,14 +11,27 @@ import { DeviceElementComponent } from '../device-element/device-element.compone
     templateUrl: './devices-list.component.html',
     styleUrls: ['./devices-list.component.less']
 })
-export class DevicesListComponent {
+export class DevicesListComponent implements OnInit {
     @ViewChildren('device')
     public devicesElements!: QueryList<DeviceElementComponent>;
     public devices: DeviceInfo[] = new Array<DeviceInfo>();
     public statusTypes: typeof DeviceStatus = DeviceStatus;
+    public elapsedUpdateSeconds: number = 0;
+    public settingsForm: FormGroup = new FormGroup({
+        searchInput: new FormControl('')
+    });
+    public get searchCriteria(): string {
+        return this.settingsForm.get('searchInput')?.value;
+    }
     private _appendCount: number = 3;
 
     constructor(private _info: DeviceInfoService) { }
+    public ngOnInit(): void {
+        interval(1000)
+            .subscribe(() => {
+                this.elapsedUpdateSeconds += 1;
+            });
+    }
 
     public addRandomDevice(): void {
         const device: DeviceInfo = new DeviceInfo();
@@ -37,6 +51,11 @@ export class DevicesListComponent {
         });
     }
 
+    public updateToMatch(criteria: string): void {
+        console.log(criteria);
+        this.devices = this.devices.filter((dev: DeviceInfo) => dev.name?.includes(criteria));
+    }
+
     public loadMoreDevices(): void {
         const ans: Observable<DeviceInfo[]> = this._info.getRange(
             this.devices.length, 
@@ -48,11 +67,12 @@ export class DevicesListComponent {
     }
 
     public updateDevicesInfo(): void {
+        this.elapsedUpdateSeconds = 0;
+
         this.devicesElements.forEach((el: DeviceElementComponent) => {
             this._info
                 .get(el.deviceInfo.id)
                 .pipe(catchError((val: DeviceInfo) => {
-                    console.log('disabling:', el.deviceInfo.name);
                     el.disableDevice();
                     
                     return of(val);

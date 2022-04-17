@@ -8,20 +8,11 @@ import { DeviceStatus } from '../../enums/deviceStatus';
     templateUrl: './device-element.component.html',
     styleUrls: ['./device-element.component.less']
 })
-export class DeviceElementComponent implements OnInit {
+export class DeviceElementComponent {
     @Input()
     public deviceInfo!: DeviceInfo;
 
     constructor() { }
-
-    public ngOnInit(): void {
-        interval(1000)
-            .subscribe(() => {
-                if (this.deviceInfo) {
-                    this.deviceInfo.lastAnswerTime += 1; 
-                }
-            });
-    }
 
     public updateInfo(device: DeviceInfo): void {
         Object.assign(this.deviceInfo, device);

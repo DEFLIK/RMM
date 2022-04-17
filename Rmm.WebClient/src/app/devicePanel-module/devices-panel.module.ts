@@ -9,15 +9,19 @@ import { AuthInterceptor } from '../auth-module/services/auth/auth.interceptor';
 import { HeaderComponent } from './components/header/header.component';
 import { DeviceElementComponent } from './components/device-element/device-element.component';
 import { SecondsRoundPipe } from './pipes/seconds-round.pipe';
+import { FormControlDirective, ReactiveFormsModule } from '@angular/forms';
+import { DeviceFilterPipe } from './pipes/deviceFilter.pipe';
 @NgModule({
     declarations: [
         DevicesListComponent,
         DevicesPanelComponent,
         HeaderComponent,
         DeviceElementComponent,
-        SecondsRoundPipe
+        SecondsRoundPipe,
+        DeviceFilterPipe
     ],
     imports: [
+        ReactiveFormsModule,
         CommonModule,
         RouterModule.forChild([
             {
