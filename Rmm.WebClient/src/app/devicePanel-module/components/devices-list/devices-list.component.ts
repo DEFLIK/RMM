@@ -4,6 +4,7 @@ import { catchError, interval, Observable, of } from 'rxjs';
 import { DeviceStatus } from '../../enums/deviceStatus';
 import { DeviceInfo } from '../../models/deviceInfo';
 import { DeviceInfoService } from '../../services/deviceInfo/device-info.service';
+import { DevicesStorageService } from '../../services/deviceInfo/devices-storage.service';
 import { DeviceElementComponent } from '../device-element/device-element.component';
 
 @Component({
@@ -11,28 +12,29 @@ import { DeviceElementComponent } from '../device-element/device-element.compone
     templateUrl: './devices-list.component.html',
     styleUrls: ['./devices-list.component.less']
 })
-export class DevicesListComponent implements OnInit {
+export class DevicesListComponent {
     @ViewChildren('device')
     public devicesElements!: QueryList<DeviceElementComponent>;
-    public devices: DeviceInfo[] = new Array<DeviceInfo>();
+    public get devices(): DeviceInfo[] {
+        return this._storage.staticDevicesInfo;
+    };
     public statusTypes: typeof DeviceStatus = DeviceStatus;
-    public elapsedUpdateSeconds: number = 0;
-    public selectedDevice?: DeviceInfo;
+    public get selectedDevice(): DeviceInfo | undefined {
+        return this._storage.selectedDevice;
+    }
     public settingsForm: FormGroup = new FormGroup({
         searchInput: new FormControl('')
     });
     public get searchCriteria(): string {
         return this.settingsForm.get('searchInput')?.value;
     }
-    private _appendCount: number = 3;
-
-    constructor(private _info: DeviceInfoService) { }
-    public ngOnInit(): void {
-        interval(1000)
-            .subscribe(() => {
-                this.elapsedUpdateSeconds += 1;
-            });
+    public get elapsedUpdateSeconds(): number {
+        return this._storage.elapsedUpdateSeconds;
     }
+
+    constructor(
+        private _info: DeviceInfoService,
+        private _storage: DevicesStorageService) { }
 
     public addRandomDevice(): void {
         const device: DeviceInfo = new DeviceInfo();
@@ -52,40 +54,15 @@ export class DevicesListComponent implements OnInit {
         });
     }
 
-    public updateToMatch(criteria: string): void {
-        console.log(criteria);
-        this.devices = this.devices.filter((dev: DeviceInfo) => dev.name?.includes(criteria));
-    }
-
     public loadMoreDevices(): void {
-        const ans: Observable<DeviceInfo[]> = this._info.getRange(
-            this.devices.length, 
-            this._appendCount);
-
-        ans.subscribe((devices: DeviceInfo[]) => {
-            this.devices = this.devices.concat(devices);
-        });
+        this._storage.loadMoreDevices();
     }
 
-    public updateDevicesInfo(): void {
-        this.elapsedUpdateSeconds = 0;
-
-        this.devicesElements.forEach((el: DeviceElementComponent) => {
-            this._info
-                .get(el.deviceInfo.id)
-                .pipe(catchError((val: DeviceInfo) => {
-                    el.disableDevice();
-                    
-                    return of(val);
-                }))
-                .subscribe((ansDevice: DeviceInfo) => {
-                    el.updateInfo(ansDevice);
-                });
-        });
+    public refreshDeviceElements(): void {
+        this._storage.refreshDevicesInfo();
     }
 
     public selectDevice(device: DeviceInfo): void {
-        console.log('selected:', device);
-        this.selectedDevice = device;
+        this._storage.selectDevice(device);
     }
 }

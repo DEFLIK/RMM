@@ -11,6 +11,7 @@ import { DeviceElementComponent } from './components/device-element/device-eleme
 import { SecondsRoundPipe } from './pipes/seconds-round.pipe';
 import { FormControlDirective, ReactiveFormsModule } from '@angular/forms';
 import { DeviceFilterPipe } from './pipes/deviceFilter.pipe';
+import { DeviceControlComponent } from './components/device-control/device-control.component';
 @NgModule({
     declarations: [
         DevicesListComponent,
@@ -18,7 +19,8 @@ import { DeviceFilterPipe } from './pipes/deviceFilter.pipe';
         HeaderComponent,
         DeviceElementComponent,
         SecondsRoundPipe,
-        DeviceFilterPipe
+        DeviceFilterPipe,
+        DeviceControlComponent
     ],
     imports: [
         ReactiveFormsModule,

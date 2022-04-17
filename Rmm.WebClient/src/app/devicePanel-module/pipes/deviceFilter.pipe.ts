@@ -7,7 +7,7 @@ import { DeviceInfo } from '../models/deviceInfo';
 export class DeviceFilterPipe implements PipeTransform {
 
     public transform(value: DeviceInfo[], criteria:string): DeviceInfo[] {
-        return value.filter((device: DeviceInfo) => device.name?.includes(criteria));
+        return criteria ? value.filter((device: DeviceInfo) => device.name?.includes(criteria)) : value;
     }
 
 }

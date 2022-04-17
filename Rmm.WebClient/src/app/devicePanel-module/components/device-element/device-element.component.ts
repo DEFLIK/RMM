@@ -15,11 +15,6 @@ export class DeviceElementComponent {
     public clickEvent: EventEmitter<DeviceInfo> = new EventEmitter<DeviceInfo>();
 
     constructor() { }
-
-    public updateInfo(device: DeviceInfo): void {
-        Object.assign(this.deviceInfo, device);
-    }
-
     public disableDevice(): void {
         this.deviceInfo.status = DeviceStatus.disabled;
     }
@@ -27,6 +22,5 @@ export class DeviceElementComponent {
     @HostListener('click')
     public onClick(): void {
         this.clickEvent.emit(this.deviceInfo);
-        console.log('click:', this.deviceInfo.name);
     }
 }
