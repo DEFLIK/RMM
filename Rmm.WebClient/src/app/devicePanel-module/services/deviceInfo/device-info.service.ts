@@ -12,25 +12,25 @@ export class DeviceInfoService {
 
     public add(device: DeviceInfo): Observable<string> {
         return this._req.put<string, DeviceInfo>(
-            'api/device/add', 
+            'api/device/info/add', 
             device);
     }
 
     public get(id: string): Observable<DeviceInfo> {
         return this._req.get<DeviceInfo>(
-            `api/device/get?id=${id}`
+            `api/device/info/get?id=${id}`
         );
     }
 
     public getRange(start: number, count: number): Observable<DeviceInfo[]> {
         return this._req.get<DeviceInfo[]>(
-            `api/device/getRange?start=${start}&count=${count}`
+            `api/device/info/getRange?start=${start}&count=${count}`
         );
     }
 
     public delete(id: string): Observable<void> {
         return this._req.delete<void>(
-            `api/device/delete?id=${id}`
+            `api/device/info/delete?id=${id}`
         );
     }
 

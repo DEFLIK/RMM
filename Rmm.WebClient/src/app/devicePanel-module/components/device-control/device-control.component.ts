@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DeviceInfo } from '../../models/deviceInfo';
-import { DevicesStorageService } from '../../services/deviceInfo/devices-storage.service';
+import { DevicesStorageService } from '../../services/deviceStorage/devices-storage.service';
 
 @Component({
     selector: 'app-device-control',

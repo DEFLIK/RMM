@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { interval, Observable, share, Subscription, switchMap } from 'rxjs';
 import { DeviceInfo } from '../../models/deviceInfo';
-import { DeviceInfoService } from './device-info.service';
+import { DeviceInfoService } from '../deviceInfo/device-info.service';
 
 @Injectable({
     providedIn: 'root'

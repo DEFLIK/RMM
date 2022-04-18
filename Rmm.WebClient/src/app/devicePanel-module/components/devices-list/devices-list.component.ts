@@ -4,7 +4,7 @@ import { catchError, interval, Observable, of } from 'rxjs';
 import { DeviceStatus } from '../../enums/deviceStatus';
 import { DeviceInfo } from '../../models/deviceInfo';
 import { DeviceInfoService } from '../../services/deviceInfo/device-info.service';
-import { DevicesStorageService } from '../../services/deviceInfo/devices-storage.service';
+import { DevicesStorageService } from '../../services/deviceStorage/devices-storage.service';
 import { DeviceElementComponent } from '../device-element/device-element.component';
 
 @Component({
