@@ -17,6 +17,14 @@ export class RequestService {
             );
     }
 
+    public getAsFile(url: string): Observable<Blob> {
+        return this._http.get(
+            url, { responseType: 'blob' })
+            .pipe(
+                catchError(this.handleError)
+            );
+    }
+
     public delete<TResponse>(url: string): Observable<TResponse>{
         return this._http.delete<TResponse>(
             url)

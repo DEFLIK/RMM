@@ -23,9 +23,9 @@ namespace Rmm.Domain.Core.Controllers
         }
 
         [HttpPut("set")]
-        public async Task<ActionResult<Guid>> SetState([FromBody] DeviceState deviceState)
+        public async Task<ActionResult<Guid>> SetState([FromBody] DeviceState state)
         {
-            await _stateSerivce.SetState(deviceState);
+            await _stateSerivce.SetState(state);
 
             return Ok();
         }

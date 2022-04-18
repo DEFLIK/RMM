@@ -22,7 +22,7 @@ namespace Rmm.Domain.Core.Controllers
         }
 
         [HttpPut("set")]
-        public async Task<ActionResult> SetScreen(Guid deviceId, [FromBody] DeviceScreen image)
+        public async Task<ActionResult> SetScreen(Guid id, [FromBody] DeviceScreen image)
         {
             byte[] conv;
             try
@@ -34,16 +34,16 @@ namespace Rmm.Domain.Core.Controllers
                 return BadRequest(e.Message);
             }
 
-            await _screenSerivce.SetDeviceScreenImage(deviceId, conv);
+            await _screenSerivce.SetDeviceScreenImage(id, conv);
 
             return Ok();
         }
 
         [HttpGet("get")]
         [Produces("image/png")]
-        public async Task<ActionResult<byte[]>> GetScreen(Guid deviceId)
+        public async Task<ActionResult<byte[]>> GetScreen(Guid id)
         {
-            var image = await _screenSerivce.GetScreenImageOrNull(deviceId);
+            var image = await _screenSerivce.GetScreenImageOrNull(id);
 
             if (image is not null)
                 return File(image, "image/png");
