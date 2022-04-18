@@ -6,8 +6,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Rmm.Domain.Core.Models;
+using Rmm.Domain.Core.Services;
 using Rmm.Domain.Core.Services.AuthService;
-using Rmm.Domain.Core.Services.DeviceDataService;
+using Rmm.Domain.Core.Services.DeviceInfoService;
+using Rmm.Domain.Core.Services.DeviceScreenService;
+using Rmm.Domain.Core.Services.DeviceStateService;
 using Rmm.Domain.DAL;
 using Rmm.Domain.DAL.Entities;
 using Rmm.Domain.DAL.Interfaces;
@@ -50,9 +54,13 @@ namespace Rmm.Domain.Core
                     });
             });
 
+            services.AddControllers().AddNewtonsoftJson();
+
             services.AddScoped<IDbRepository, DbRepository>();
-            services.AddTransient<IDataService<DeviceInfo>, DeviceDataService>();
-            services.AddTransient<IAuthService, AuthService>();
+            services.AddScoped<IDataService<DeviceInfo>, DeviceInfoService>();
+            services.AddSingleton<IDeviceStateService, DeviceStateService>();
+            services.AddSingleton<IDeviceScreenService, DeviceScreenService>();
+            services.AddScoped<IAuthService, AuthService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
