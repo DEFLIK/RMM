@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Rmm.Domain.DAL.Interfaces;
 
-namespace Rmm.Domain.Core.Services.DeviceDataService
+namespace Rmm.Domain.Core.Services
 {
     public interface IDataService<T> where T : class, IEntity
     {

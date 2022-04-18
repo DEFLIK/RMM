@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Rmm.Domain.DAL.Entities;
 using Rmm.Domain.DAL.Interfaces;
 
-namespace Rmm.Domain.Core.Services.DeviceDataService
+namespace Rmm.Domain.Core.Services.DeviceInfoService
 {
-    public class DeviceDataService : IDataService<DeviceInfo>
+    public class DeviceInfoService : IDataService<DeviceInfo>
     {
         private readonly IDbRepository _dbRepository;
 
-        public DeviceDataService(IDbRepository dbRepository)
+        public DeviceInfoService(IDbRepository dbRepository)
         {
             _dbRepository = dbRepository;
         }

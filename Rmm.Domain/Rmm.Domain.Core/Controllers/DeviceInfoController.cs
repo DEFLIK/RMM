@@ -5,12 +5,12 @@ using System.Security.Policy;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Rmm.Domain.Core.Services.DeviceDataService;
+using Rmm.Domain.Core.Services;
 using Rmm.Domain.DAL.Entities;
 
 namespace Rmm.Domain.Core.Controllers
 {
-    [Route("api/device")]
+    [Route("api/device/info")]
     [ApiController]
     public class DeviceInfoController : ControllerBase
     {
@@ -29,7 +29,7 @@ namespace Rmm.Domain.Core.Controllers
             DeviceInfo device;
             try
             {
-                device = JsonConvert.DeserializeObject<DeviceInfo>(json);
+                device = JsonConvert.DeserializeObject<DeviceInfo>(json) ?? new DeviceInfo();
             }
             catch
             {
@@ -81,7 +81,7 @@ namespace Rmm.Domain.Core.Controllers
             DeviceInfo device;
             try
             {
-                device = JsonConvert.DeserializeObject<DeviceInfo>(json);
+                device = JsonConvert.DeserializeObject<DeviceInfo>(json) ?? new DeviceInfo();
             }
             catch
             {
