@@ -12,6 +12,11 @@ import { SecondsRoundPipe } from './pipes/seconds-round.pipe';
 import { FormControlDirective, ReactiveFormsModule } from '@angular/forms';
 import { DeviceFilterPipe } from './pipes/deviceFilter.pipe';
 import { DeviceControlComponent } from './components/device-control/device-control.component';
+import { NgChartsModule } from 'ng2-charts';
+import { DevicePerformanceGraphComponent } from './components/device-perf-graph/device-performance-graph/device-performance-graph.component';
+import { DevicesStorageService } from './services/deviceStorage/devices-storage.service';
+import { DeviceTerminalComponent } from './components/device-terminal/device-terminal/device-terminal.component';
+
 @NgModule({
     declarations: [
         DevicesListComponent,
@@ -20,11 +25,14 @@ import { DeviceControlComponent } from './components/device-control/device-contr
         DeviceElementComponent,
         SecondsRoundPipe,
         DeviceFilterPipe,
-        DeviceControlComponent
+        DeviceControlComponent,
+        DevicePerformanceGraphComponent,
+        DeviceTerminalComponent
     ],
     imports: [
         ReactiveFormsModule,
         CommonModule,
+        NgChartsModule,
         RouterModule.forChild([
             {
                 path: '', 
@@ -34,6 +42,7 @@ import { DeviceControlComponent } from './components/device-control/device-contr
     ],
     bootstrap: [DevicesPanelComponent],
     providers: [
+        DevicesStorageService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

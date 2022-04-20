@@ -1,11 +1,8 @@
 import { DeviceStatus } from '../enums/deviceStatus';
 
-export class DeviceInfo {
+export class DeviceStaticInfo {
     public id!: string;
     public name?: string;
-    public status?: DeviceStatus;
     public os?: string;
     public coordinates?: string[];
-    public runTimeS?: number;
-    public lastAnswerTime!: number;
 }

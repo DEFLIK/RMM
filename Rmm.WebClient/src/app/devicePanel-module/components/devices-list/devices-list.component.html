@@ -19,10 +19,10 @@
             (clickEvent)="selectDevice($event)"
             [deviceInfo]="device"
             [ngClass]="{
-                'enabled': device.status === statusTypes.enabled,
-                'disabled': device.status === statusTypes.disabled,
-                'blocked': device.status === statusTypes.blocked,
-                'sleep': device.status === statusTypes.sleep
+                'enabled': devicesState.get(device.id)?.status === statusTypes.enabled,
+                'disabled': devicesState.get(device.id)?.status === statusTypes.disabled,
+                'blocked': devicesState.get(device.id)?.status === statusTypes.blocked,
+                'sleep': devicesState.get(device.id)?.status === statusTypes.sleep
             }" >
         </app-device-element>
     </div>

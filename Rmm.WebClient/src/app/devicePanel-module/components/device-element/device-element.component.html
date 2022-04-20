@@ -1,2 +1,2 @@
 {{ deviceInfo.name }}
-{{ deviceInfo.lastAnswerTime | secondsRound: 5 }}
+{{ deviceState.lastAnswerTime ?? 1000 | secondsRound: 5 }}

@@ -2,7 +2,8 @@ import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular
 import { FormControl, FormGroup } from '@angular/forms';
 import { catchError, interval, Observable, of } from 'rxjs';
 import { DeviceStatus } from '../../enums/deviceStatus';
-import { DeviceInfo } from '../../models/deviceInfo';
+import { DeviceStaticInfo } from '../../models/deviceInfo';
+import { DeviceState } from '../../models/deviceState';
 import { DeviceInfoService } from '../../services/deviceInfo/device-info.service';
 import { DevicesStorageService } from '../../services/deviceStorage/devices-storage.service';
 import { DeviceElementComponent } from '../device-element/device-element.component';
@@ -15,13 +16,13 @@ import { DeviceElementComponent } from '../device-element/device-element.compone
 export class DevicesListComponent {
     @ViewChildren('device')
     public devicesElements!: QueryList<DeviceElementComponent>;
-    public get devices(): DeviceInfo[] {
+    public get devices(): DeviceStaticInfo[] {
         return this._storage.devices;
     };
-    public statusTypes: typeof DeviceStatus = DeviceStatus;
-    public get selectedDevice(): DeviceInfo | undefined {
-        return this._storage.selectedDevice;
+    public get devicesState(): Map<string, DeviceState> {
+        return this._storage.devicesState;
     }
+    public statusTypes: typeof DeviceStatus = DeviceStatus;
     public settingsForm: FormGroup = new FormGroup({
         searchInput: new FormControl('')
     });
@@ -34,33 +35,15 @@ export class DevicesListComponent {
 
     constructor(private _storage: DevicesStorageService) { }
 
-    // public addRandomDevice(): void {
-    //     const device: DeviceInfo = new DeviceInfo();
-    //     device.os = `Windows`;
-    //     device.status = DeviceStatus.enabled;
-    //     device.coordinates = [
-    //         (Math.floor(Math.random() * 1000)).toString(),
-    //         (Math.floor(Math.random() * 1000)).toString()
-    //     ];
-    //     device.runTimeS = Math.floor(Math.random() * 1000);
-    //     device.name = `pc-${Math.floor(Math.random() * 1000)}`;
-
-    //     const ans: Observable<string> = this._info.add(device);
-
-    //     ans.subscribe((id: string) => {
-    //         console.log(id);
-    //     });
-    // }
-
     public loadMoreDevices(): void {
         this._storage.loadMoreDevices();
     }
 
     public refreshDeviceElements(): void {
-        this._storage.refreshDevicesInfo();
+        this._storage.refreshDevicesState();
     }
 
-    public selectDevice(device: DeviceInfo): void {
+    public selectDevice(device: DeviceStaticInfo): void {
         this._storage.selectDevice(device);
     }
 }

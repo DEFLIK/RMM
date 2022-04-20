@@ -1,4 +1,8 @@
+import { DeviceStatus } from '../enums/deviceStatus';
+
 export class DeviceState {
-    public cpuPerformanceGraph? : number[];
-    public terminalLog? : string[];
+    public sourceDeviceId!: string;
+    public status?: DeviceStatus;
+    public runTimeS?: number;
+    public lastAnswerTime?: number;
 }
