@@ -8,9 +8,12 @@ import { DeviceInfoService } from '../deviceInfo/device-info.service';
 })
 export class DevicesStorageService {
     public selectedDevice?: DeviceInfo;
-    public staticDevicesInfo: DeviceInfo[] = new Array<DeviceInfo>();
+    public get devices(): DeviceInfo[] {
+        return this._devices;
+    }
     public elapsedUpdateSeconds: number = 0;
     private _appendCount: number = 3;
+    private _devices: DeviceInfo[] = new Array<DeviceInfo>();
 
     constructor(private _info: DeviceInfoService) {
         interval(1000).subscribe(() => {
@@ -20,12 +23,12 @@ export class DevicesStorageService {
 
     public loadMoreDevices(): void {
         const ans: Observable<DeviceInfo[]> = this._info.getRange(
-            this.staticDevicesInfo.length, 
+            this._devices.length, 
             this._appendCount);
 
         ans.subscribe((devices: DeviceInfo[]) => {
             devices.forEach((device: DeviceInfo) => {
-                this.staticDevicesInfo.push(device);
+                this._devices.push(device);
             });
         });
     }
@@ -33,11 +36,11 @@ export class DevicesStorageService {
     public refreshDevicesInfo(): void {
         this.elapsedUpdateSeconds = 0;
 
-        for (let i: number = 0; i < this.staticDevicesInfo.length; i++) {
+        for (let i: number = 0; i < this._devices.length; i++) {
             this._info
-                .get(this.staticDevicesInfo[i].id)
+                .get(this._devices[i].id)
                 .subscribe((refreshedDevice: DeviceInfo) => {
-                    Object.assign(this.staticDevicesInfo[i], refreshedDevice);
+                    Object.assign(this._devices[i], refreshedDevice);
                 });
         }
     }

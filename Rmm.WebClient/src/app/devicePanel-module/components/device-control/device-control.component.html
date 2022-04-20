@@ -1,3 +1,4 @@
-{{ currentDeviceId }}
-<button (click)="press()">load img</button>
-<img [src]="imageToShow" alt="img">
+<div *ngIf="selectedDevice">
+    {{ selectedDevice.id }}
+    <img [src]="imageToShow" alt="img">
+</div>

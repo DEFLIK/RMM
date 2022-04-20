@@ -16,7 +16,7 @@ export class DevicesListComponent {
     @ViewChildren('device')
     public devicesElements!: QueryList<DeviceElementComponent>;
     public get devices(): DeviceInfo[] {
-        return this._storage.staticDevicesInfo;
+        return this._storage.devices;
     };
     public statusTypes: typeof DeviceStatus = DeviceStatus;
     public get selectedDevice(): DeviceInfo | undefined {
