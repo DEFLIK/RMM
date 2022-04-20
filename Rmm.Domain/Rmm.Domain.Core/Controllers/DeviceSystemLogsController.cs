@@ -1,39 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Rmm.Domain.Core.Models;
 using Rmm.Domain.Core.Services.DeviceStateService;
-using Rmm.Domain.DAL.Entities;
+using Rmm.Domain.Core.Services.DeviceSystemLogsService;
 
 namespace Rmm.Domain.Core.Controllers
 {
-    [Route("api/device/state")]
+    [Route("api/device/system/logs")]
     [ApiController]
-    public class DeviceStateController : ControllerBase
+    public class DeviceSystemLogsController : ControllerBase
     {
-        private readonly IDeviceStateService _stateSerivce;
-        public DeviceStateController(IDeviceStateService service)
+        private readonly IDeviceSystemLogsService _stateSerivce;
+        public DeviceSystemLogsController(IDeviceSystemLogsService service)
         {
             _stateSerivce = service;
         }
 
         [HttpPut("set")]
-        public async Task<ActionResult<Guid>> SetState([FromBody] DeviceState systemLogs)
+        public async Task<ActionResult<Guid>> SetLogs([FromBody] DeviceSystemLogs systemLogs)
         {
-            await _stateSerivce.SetState(systemLogs);
+            await _stateSerivce.SetLogs(systemLogs);
 
             return Ok();
         }
 
         [HttpGet("get")]
-        public async Task<ActionResult<DeviceSystemLogs>> GetState(Guid id)
+        public async Task<ActionResult<DeviceSystemLogs>> GetLogs(Guid id)
         {
-            var device = await _stateSerivce.GetStateOrNull(id);
+            var device = await _stateSerivce.GetLogsOrNull(id);
 
             if (device is null)
                 return NotFound();

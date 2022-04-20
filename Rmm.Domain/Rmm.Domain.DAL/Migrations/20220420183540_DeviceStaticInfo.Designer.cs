@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Rmm.Domain.DAL;
@@ -9,9 +10,10 @@ using Rmm.Domain.DAL;
 namespace Rmm.Domain.DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220420183540_DeviceStaticInfo")]
+    partial class DeviceStaticInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,6 +29,9 @@ namespace Rmm.Domain.DAL.Migrations
 
                     b.Property<double[]>("Coordinates")
                         .HasColumnType("double precision[]");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -48,6 +53,9 @@ namespace Rmm.Domain.DAL.Migrations
                     b.Property<DateTime>("ExpireAt")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Token")
                         .HasColumnType("text");
 
@@ -67,6 +75,9 @@ namespace Rmm.Domain.DAL.Migrations
 
                     b.Property<string>("Hash")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");

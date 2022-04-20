@@ -9,9 +9,10 @@ using Microsoft.OpenApi.Models;
 using Rmm.Domain.Core.Models;
 using Rmm.Domain.Core.Services;
 using Rmm.Domain.Core.Services.AuthService;
-using Rmm.Domain.Core.Services.DeviceInfoService;
 using Rmm.Domain.Core.Services.DeviceScreenService;
 using Rmm.Domain.Core.Services.DeviceStateService;
+using Rmm.Domain.Core.Services.DeviceStaticInfoService;
+using Rmm.Domain.Core.Services.DeviceSystemLogsService;
 using Rmm.Domain.DAL;
 using Rmm.Domain.DAL.Entities;
 using Rmm.Domain.DAL.Interfaces;
@@ -57,7 +58,8 @@ namespace Rmm.Domain.Core
             services.AddControllers().AddNewtonsoftJson();
 
             services.AddScoped<IDbRepository, DbRepository>();
-            services.AddScoped<IDataService<DeviceInfo>, DeviceInfoService>();
+            services.AddScoped<IDataService<DeviceStaticInfo>, DeviceStaticInfoService>();
+            services.AddSingleton<IDeviceSystemLogsService, DeviceSystemLogsService>();
             services.AddSingleton<IDeviceStateService, DeviceStateService>();
             services.AddSingleton<IDeviceScreenService, DeviceScreenService>();
             services.AddScoped<IAuthService, AuthService>();

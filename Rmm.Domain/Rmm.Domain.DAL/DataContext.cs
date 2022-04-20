@@ -5,7 +5,7 @@ namespace Rmm.Domain.DAL
 {
     public class DataContext : DbContext
     {
-        public DbSet<DeviceInfo> Devices { get; set; }
+        public DbSet<DeviceStaticInfo> Devices { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Session> Sessions { get; set; }
 

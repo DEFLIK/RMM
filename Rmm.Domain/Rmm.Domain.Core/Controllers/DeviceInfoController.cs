@@ -14,8 +14,8 @@ namespace Rmm.Domain.Core.Controllers
     [ApiController]
     public class DeviceInfoController : ControllerBase
     {
-        private readonly IDataService<DeviceInfo> _dataSerivce;
-        public DeviceInfoController(IDataService<DeviceInfo> service)
+        private readonly IDataService<DeviceStaticInfo> _dataSerivce;
+        public DeviceInfoController(IDataService<DeviceStaticInfo> service)
         {
             _dataSerivce = service;
         }
@@ -26,23 +26,23 @@ namespace Rmm.Domain.Core.Controllers
             var stream = Request.Body;
             var json = await new StreamReader(stream).ReadToEndAsync();
 
-            DeviceInfo device;
+            DeviceStaticInfo deviceStatic;
             try
             {
-                device = JsonConvert.DeserializeObject<DeviceInfo>(json) ?? new DeviceInfo();
+                deviceStatic = JsonConvert.DeserializeObject<DeviceStaticInfo>(json) ?? new DeviceStaticInfo();
             }
             catch
             {
                 return BadRequest();
             }
 
-            await _dataSerivce.Create(device);
+            await _dataSerivce.Create(deviceStatic);
 
             return Ok();
         }
 
         [HttpGet("get")]
-        public async Task<ActionResult<DeviceInfo>> GetDevice(Guid id)
+        public async Task<ActionResult<DeviceStaticInfo>> GetDevice(Guid id)
         {
             var device = await _dataSerivce.Get(id);
 
@@ -53,7 +53,7 @@ namespace Rmm.Domain.Core.Controllers
         }
 
         [HttpGet("getRange")]
-        public async Task<ActionResult<DeviceInfo[]>> GetRangeDevice(int start, int count)
+        public async Task<ActionResult<DeviceStaticInfo[]>> GetRangeDevice(int start, int count)
         {
             var devices = await _dataSerivce.GetRange(start, count);
 
@@ -78,17 +78,17 @@ namespace Rmm.Domain.Core.Controllers
             var stream = Request.Body;
             var json = await new StreamReader(stream).ReadToEndAsync();
 
-            DeviceInfo device;
+            DeviceStaticInfo deviceStatic;
             try
             {
-                device = JsonConvert.DeserializeObject<DeviceInfo>(json) ?? new DeviceInfo();
+                deviceStatic = JsonConvert.DeserializeObject<DeviceStaticInfo>(json) ?? new DeviceStaticInfo();
             }
             catch
             {
                 return BadRequest();
             }
 
-            await _dataSerivce.Update(device);
+            await _dataSerivce.Update(deviceStatic);
 
             return Ok();
         }
