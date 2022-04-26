@@ -24,7 +24,7 @@ namespace Rmm.Domain.DAL.Repositories
 
         public IQueryable<T> GetRange<T>(int start, int count) where T : class, IEntity
         {
-            return _context.Set<T>().Skip(start).Take(count).AsQueryable();
+            return _context.Set<T>().OrderBy(x => x.Id).Skip(start).Take(count).AsQueryable();
         }
 
         public IQueryable<T> Get<T>(Expression<Func<T, bool>> selector) where T : class, IEntity
