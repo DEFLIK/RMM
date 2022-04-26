@@ -4,6 +4,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { interval, Subscription } from 'rxjs';
 import { DeviceStaticInfo } from '../../models/deviceInfo';
 import { DeviceState } from '../../models/deviceState';
+import { DeviceSystemLogs } from '../../models/deviceSystemLogs';
 import { DeviceScreenService } from '../../services/deviceScreen/device-screen.service';
 import { DevicesStorageService } from '../../services/deviceStorage/devices-storage.service';
 
@@ -20,6 +21,7 @@ export class DeviceControlComponent implements OnInit, OnDestroy {
     
     constructor(private _storage: DevicesStorageService, private _screen: DeviceScreenService) { }
     public ngOnInit(): void {
+
         this._storage
             .onDeviceSelected$
             .subscribe((device: DeviceStaticInfo) => {

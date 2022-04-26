@@ -49,7 +49,7 @@ namespace Rmm.Domain.Core.Services.DeviceStateService
             };
             timer.Start();
             _stateUpdater = timer;
-            Console.WriteLine("TIMER STARTED!!!!!!!!!!!!!!!!!!!!");
+            Console.WriteLine("Device state emulation started...");
         }
 
         public Task<DeviceState> GetStateOrNull(Guid id)

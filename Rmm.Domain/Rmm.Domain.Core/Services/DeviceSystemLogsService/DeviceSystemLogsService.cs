@@ -28,7 +28,7 @@ namespace Rmm.Domain.Core.Services.DeviceSystemLogsService
                     {
                         CpuPerformanceGraph = new Queue<double>(),
                         SourceDeviceId = device.Id,
-                        TerminalLog = new List<string>()
+                        TerminalLog = new List<string>() { "testlog1", "testlog2" }
                     };
                 }
             }
@@ -45,7 +45,7 @@ namespace Rmm.Domain.Core.Services.DeviceSystemLogsService
             };
             timer.Start();
             _stateUpdater = timer;
-            Console.WriteLine("TIMER STARTED!!!!!!!!!!!!!!!!!!!!");
+            Console.WriteLine("Device system logs emulation started...");
         }
 
         public Task<DeviceSystemLogs> GetLogsOrNull(Guid id)
