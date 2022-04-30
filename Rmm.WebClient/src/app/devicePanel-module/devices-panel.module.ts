@@ -11,11 +11,14 @@ import { DeviceElementComponent } from './components/device-element/device-eleme
 import { SecondsRoundPipe } from './pipes/seconds-round.pipe';
 import { FormControlDirective, ReactiveFormsModule } from '@angular/forms';
 import { DeviceFilterPipe } from './pipes/deviceFilter.pipe';
-import { DeviceControlComponent } from './components/device-control/device-control.component';
 import { NgChartsModule } from 'ng2-charts';
 import { DevicePerformanceGraphComponent } from './components/device-perf-graph/device-performance-graph/device-performance-graph.component';
 import { DevicesStorageService } from './services/deviceStorage/devices-storage.service';
 import { DeviceTerminalComponent } from './components/device-terminal/device-terminal/device-terminal.component';
+import { SettingsComponent } from './settings/settings.component';
+import { DeviceScreenComponent } from './components/device-screen/device-screen.component';
+import { DeviceViewComponent } from './components/device-view/device-view.component';
+import { DeviceControlsComponent } from './components/device-controls/device-controls.component';
 
 @NgModule({
     declarations: [
@@ -25,9 +28,12 @@ import { DeviceTerminalComponent } from './components/device-terminal/device-ter
         DeviceElementComponent,
         SecondsRoundPipe,
         DeviceFilterPipe,
-        DeviceControlComponent,
+        DeviceViewComponent,
         DevicePerformanceGraphComponent,
-        DeviceTerminalComponent
+        DeviceTerminalComponent,
+        SettingsComponent,
+        DeviceScreenComponent,
+        DeviceControlsComponent
     ],
     imports: [
         ReactiveFormsModule,
