@@ -1,0 +1,29 @@
+@import (reference) "/src/styles.less";
+
+.head {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    align-items: center;
+
+    &-logo {
+        height: 70%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+        color: @color-main;
+
+        img {
+            height: 100%;
+        }
+
+        &-line {
+            height: 95%;
+            width: 0;
+            border-right: solid 3px @color-bg-dark;
+        }
+    }
+}
