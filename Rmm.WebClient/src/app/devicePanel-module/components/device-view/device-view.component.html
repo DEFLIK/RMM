@@ -1,0 +1,11 @@
+<div class="view" *ngIf="selectedDevice">
+    <div class="left">
+        <app-device-screen class="screen"></app-device-screen>
+        <app-device-controls></app-device-controls>
+    </div>
+    <div class="right">
+        <app-device-performance-graph class="graphs"></app-device-performance-graph>
+        <app-device-terminal class="terminal"></app-device-terminal>
+    </div>
+    <!-- {{ selectedDevice.id }} -->
+</div>

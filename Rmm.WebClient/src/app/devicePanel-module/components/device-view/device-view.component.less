@@ -1,0 +1,42 @@
+@import (reference) "/src/styles.less";
+
+.view {
+    display: flex;
+    height: 100%;
+
+    .left {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: space-evenly;
+        height: 100%;
+        width: 60%;
+    }
+
+    .screen {
+        border: solid 2px @color-main;
+        width: 70%;
+        aspect-ratio: 16/9;
+        border-radius: 5px;
+    }
+
+    .right {
+        display: flex;
+        flex-flow: column;
+        width: 40%;
+        height: 100%;
+    }
+
+    .graphs {
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: 200px;
+    }
+
+    .terminal {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
+        align-items: center;
+    }
+}
