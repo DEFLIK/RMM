@@ -1,0 +1,54 @@
+@import (reference) "/src/styles.less";
+
+:host {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+
+    .terminal {
+        &-output {
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            width: 80%;
+            height: 80%;
+            border: solid 2px @color-main;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            overflow-y: scroll;
+        }
+
+        &-input {
+            display: flex;
+            padding-left: 5px;
+            padding-right: 5px;
+            gap: 5px;
+            height: 20px;
+            outline: none;
+            width: 80%;
+            border: solid 2px @color-main;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+
+            a {
+                font-weight: bold;
+                color: @color-main;
+                flex: 0 0 10px;
+            }
+
+            input {
+                flex: 1 1 auto;
+                padding: 0;
+                height: 100%;
+                border: none;
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+    }
+    
+}

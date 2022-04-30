@@ -1,2 +1,9 @@
-list:
-<div *ngFor="let log of terminalLogs">{{log}}</div>
+<div class="terminal-output">
+    <span *ngFor="let log of terminalLogs">{{log}}</span>
+</div>
+
+<label class="terminal-input" for="term_inp">
+    <a>></a>
+    <input id="term_inp" type="text">
+</label>
+

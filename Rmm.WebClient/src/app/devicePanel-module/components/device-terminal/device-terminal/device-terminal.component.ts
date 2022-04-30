@@ -13,7 +13,7 @@ export class DeviceTerminalComponent implements OnInit {
     public terminalLogs: string[] = [];
 
     constructor(private _storage: DevicesStorageService) { }
-    public ngOnInit(): void {
+    public ngOnInit(): void { 
         this._storage
             .onSelectedLogsRefresh$
             .subscribe((logs: DeviceSystemLogs) => {
