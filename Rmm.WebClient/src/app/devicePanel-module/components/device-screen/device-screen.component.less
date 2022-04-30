@@ -1,0 +1,23 @@
+@import (reference) "/src/styles.less";
+
+:host {
+    display: flex;
+    flex-direction: column;
+
+    .not-found {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 10%;
+        }
+    
+        span {
+            color: @color-main;
+        }
+    }
+}

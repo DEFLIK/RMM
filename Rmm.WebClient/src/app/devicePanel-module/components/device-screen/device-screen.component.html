@@ -1,0 +1,5 @@
+<img *ngIf="imageToShow" [src]="imageToShow">
+<div (click)="startStream()" class="not-found" *ngIf="!imageToShow">
+    <img src="../../../../assets/svg/noimage.svg">
+    <span>No image, click to retry</span>
+</div>
