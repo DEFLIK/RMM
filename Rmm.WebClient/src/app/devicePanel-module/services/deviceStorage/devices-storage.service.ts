@@ -15,6 +15,13 @@ export class DevicesStorageService implements OnDestroy {
     public get devicesState(): Map<string, DeviceState> {
         return this._devicesState;
     }
+    public get selectedDeviceId(): string | null {
+        if (!this._selectedDevice) {
+            return null;
+        }
+
+        return this._selectedDevice.id;
+    }
     public onDeviceSelected$!: Subject<DeviceStaticInfo>;
     public onSelectedLogsRefresh$!: Subject<DeviceState>;
     public elapsedUpdateSeconds: number = 0;
@@ -39,6 +46,8 @@ export class DevicesStorageService implements OnDestroy {
                 //this.refreshDevicesState();
                 this.refreshSelectedLogs();
             });
+
+        this.loadAllDevices();
     }
 
     public ngOnDestroy(): void {
@@ -49,6 +58,18 @@ export class DevicesStorageService implements OnDestroy {
         const ans: Observable<DeviceStaticInfo[]> = this._info.getRange(
             this._devices.length, 
             this._appendCount);
+
+        ans.subscribe((devices: DeviceStaticInfo[]) => {
+            devices.forEach((device: DeviceStaticInfo) => {
+                this._devices.push(device);
+                this._devicesState.set(device.id, new DeviceState());
+                this.refreshDevicesState();
+            });
+        });
+    }
+
+    public loadAllDevices(): void {
+        const ans: Observable<DeviceStaticInfo[]> = this._info.getAll();
 
         ans.subscribe((devices: DeviceStaticInfo[]) => {
             devices.forEach((device: DeviceStaticInfo) => {
