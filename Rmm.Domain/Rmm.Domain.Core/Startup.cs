@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -80,6 +81,8 @@ namespace Rmm.Domain.Core
             app.UseRouting();
 
             app.UseAuthorization();
+
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             app.UseEndpoints(endpoints =>
             {
