@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, EMPTY, Observable, of, throwError } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -42,8 +42,8 @@ export class RequestService {
     }
 
     private handleError(response: HttpErrorResponse): Observable<never> {
-        console.log(response.error);
+        console.log('error:', response.error);
 
-        return of();
+        return throwError(response);
     }
 }
