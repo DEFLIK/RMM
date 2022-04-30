@@ -63,6 +63,17 @@ namespace Rmm.Domain.Core.Controllers
             return Ok(devices);
         }
 
+        [HttpGet("getAll")]
+        public async Task<ActionResult<DeviceStaticInfo[]>> GetAllDevices()
+        {
+            var devices = await _dataSerivce.Get(x => true);
+
+            if (!devices.Any())
+                return NotFound();
+
+            return Ok(devices);
+        }
+
 
         [HttpDelete("delete")]
         public async Task<ActionResult> DeleteDevice(Guid id)
