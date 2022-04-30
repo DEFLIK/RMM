@@ -22,7 +22,7 @@ namespace Rmm.Domain.Core.Services.DeviceStateService
             using (var scope = scopeFactory.CreateScope())
             {
                 deviceInfoService = scope.ServiceProvider.GetRequiredService<IDataService<DeviceStaticInfo>>();
-                foreach (var device in deviceInfoService.GetRange(0, int.MaxValue).Result)
+                foreach (var device in deviceInfoService.Get(x => true).Result)
                 {
                     _connectedDevicesState[device.Id] = new DeviceState()
                     {

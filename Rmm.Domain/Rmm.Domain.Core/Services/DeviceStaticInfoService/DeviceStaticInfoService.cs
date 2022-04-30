@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Rmm.Domain.DAL.Entities;
@@ -24,8 +25,12 @@ namespace Rmm.Domain.Core.Services.DeviceStaticInfoService
 
         public async Task<DeviceStaticInfo> Get(Guid id)
         {
-            var entity = await _dbRepository.Get<DeviceStaticInfo>(device => device.Id == id).FirstOrDefaultAsync();
-            return entity;
+            return await _dbRepository.Get<DeviceStaticInfo>(device => device.Id == id).FirstOrDefaultAsync() ?? new DeviceStaticInfo();
+        }
+
+        public async Task<DeviceStaticInfo[]> Get(Expression<Func<DeviceStaticInfo, bool>> selector)
+        {
+            return await _dbRepository.Get(selector).ToArrayAsync();
         }
 
         public async Task<DeviceStaticInfo[]> GetRange(int start, int count)
