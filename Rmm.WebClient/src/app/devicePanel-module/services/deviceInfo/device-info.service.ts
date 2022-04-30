@@ -28,6 +28,12 @@ export class DeviceInfoService {
         );
     }
 
+    public getAll(): Observable<DeviceStaticInfo[]> {
+        return this._req.get<DeviceStaticInfo[]>(
+            `api/device/info/getAll`
+        );
+    }
+
     public delete(id: string): Observable<void> {
         return this._req.delete<void>(
             `api/device/info/delete?id=${id}`
