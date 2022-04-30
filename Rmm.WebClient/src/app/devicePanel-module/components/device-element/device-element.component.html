@@ -1,2 +1,4 @@
-{{ deviceInfo.name }}
-{{ deviceState.lastAnswerTime ?? 1000 | secondsRound: 5 }}
+<div class="element">
+    <span>{{ deviceInfo.name }}</span>
+    <span>Last answer: {{ deviceState.lastAnswerTime ?? 1000 | secondsRound: 5 }}</span>
+</div>
