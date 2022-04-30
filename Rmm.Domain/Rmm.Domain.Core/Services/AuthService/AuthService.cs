@@ -29,8 +29,8 @@ namespace Rmm.Domain.Core.Services.AuthService
 
             var session = new Session()
             {
-                Token = Guid.NewGuid().ToString(), // change to bearer
-                ExpireAt = DateTime.Now.AddSeconds(60)
+                Token = Guid.NewGuid().ToString(), // change to jwtbearer
+                ExpireAt = DateTime.Now.AddMinutes(10)
             };
 
             await _dbRepository.Add(session);
