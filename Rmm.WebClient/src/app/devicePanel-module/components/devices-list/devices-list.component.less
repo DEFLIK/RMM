@@ -3,29 +3,79 @@
 .devices {
     height: 100%;
     display: flex;
+    align-items: center;
     flex-flow: column;
+    padding: 12px;
+    gap: 5px;
+    background-color: @color-bg-light;
 
-    &-controls {
+    &-settings {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 5px;
         flex: 0 0 40px;
     }
 
+    &-form {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        gap: 10px;
+        width: 100%;
+    }
+
     &-list {
+        width: 100%;
         flex: 1 1 auto;
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding: 5px;
         gap: 3px;
         overflow-y: auto;
-        background-color: rgb(156, 156, 156);
     }
 
     &-element {
-        padding: 5px;
         flex: 0 0 60px;
         background-color: white;
-        width: 90%;
+        width: 100%;
         font-size: 17px;
         border-bottom: solid 3px white;
+    }
+
+    &-search {
+        flex-grow: 1;
+        padding: 0;
+        height: 20px;
+        border: solid 1px @color-main;
+        border-radius: 5px;
+
+        &:focus {
+            outline: none;
+            border: solid 1px @color-active;
+        }
+    }
+
+    &-update {
+        height: 20px;
+        cursor: pointer;
+        transition: 0.2s;
+
+        &:hover {
+            transition: 0.1s;
+            transform: rotate(90deg); 
+        }
+
+        &:active {
+            filter: brightness(0.5);
+        }
+
+        &-time {
+            align-self: flex-end;
+            color: @color-main
+        }
     }
 }
 

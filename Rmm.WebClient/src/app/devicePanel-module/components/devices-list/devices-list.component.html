@@ -1,14 +1,14 @@
 <div class="devices">
-    <form class="devices-settings" [formGroup]="settingsForm">
-        <input type="text" class="devices-search" formControlName="searchInput">
-
-    </form>
-    <div class="devices-update-time">
-        {{ elapsedUpdateSeconds | secondsRound : 10 }}
-    </div>
-    <div class="devices-controls">
-        <button (click)="loadMoreDevices()">Load more</button>
-        <button (click)="refreshDeviceElements()">Update</button>
+    <div class="devices-settings" >
+        <form class="devices-form" [formGroup]="settingsForm">
+            <input type="text" class="devices-search" formControlName="searchInput">
+            <!-- <button (click)="loadMoreDevices()">Load more</button> -->
+            <img src="../../../../assets/svg/reload.svg" class="devices-update" (click)="refreshDeviceElements()">
+            <!-- <button (click)="refreshDeviceElements()">Update</button> -->
+        </form>
+        <div class="devices-update-time">
+            Last update: {{ elapsedUpdateSeconds | secondsRound : 10 }}
+        </div>
     </div>
     
     <div class="devices-list">

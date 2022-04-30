@@ -39,6 +39,10 @@ export class DevicesListComponent {
         this._storage.loadMoreDevices();
     }
 
+    public loadAllDevices(): void {
+        this._storage.loadAllDevices();
+    }
+
     public refreshDeviceElements(): void {
         this._storage.refreshDevicesState();
     }
