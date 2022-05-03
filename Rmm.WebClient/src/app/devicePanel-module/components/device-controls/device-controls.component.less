@@ -1,0 +1,61 @@
+@import (reference) "/src/styles.less";
+
+:host {
+    flex: 1 1 auto;
+    // margin-bottom: 60px;
+    display: flex;
+    width: 70%;
+    background-color: aliceblue;
+    border: solid 2px @color-main;
+
+    .info {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 70%;
+
+        span {
+            border-bottom: solid 1px @color-main;
+        }
+    }
+
+    .controls {
+        flex: 1 1 auto;
+        gap: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        border: none;
+        width: 80%;
+        height: 50px;
+        outline: none;
+    }
+
+    .button-color(@color) {
+        background-color: @color;
+
+        &:hover {
+            background-color: lighten(@color, 5%);
+        }
+
+        &:active {
+            background-color: lighten(@color, 10%);
+        }
+    }
+
+    .sleep {
+        .button-color(gold);
+    }
+
+    .shut {
+        .button-color(@color-alert);
+    }
+
+    .restart {
+        .button-color(@color-active);
+    }
+}
