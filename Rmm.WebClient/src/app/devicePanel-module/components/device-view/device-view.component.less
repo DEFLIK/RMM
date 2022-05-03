@@ -6,36 +6,38 @@
 
     .left {
         display: flex;
+        gap: 20px;
+        padding: 30px;
         flex-flow: column;
         align-items: center;
-        justify-content: space-evenly;
-        height: 100%;
+        // justify-content: space-evenly;
+        // height: 100%;
         width: 60%;
     }
 
     .screen {
         border: solid 2px @color-main;
-        width: 70%;
+        width: 90%;
         aspect-ratio: 16/9;
         border-radius: 5px;
     }
 
     .right {
+        padding: 30px;
         display: flex;
         flex-flow: column;
         width: 40%;
-        height: 100%;
+        // height: 100%;
     }
 
     .graphs {
-        flex-grow: 0;
-        flex-shrink: 0;
-        flex-basis: 200px;
+        flex: 0 0 200px;
     }
 
     .terminal {
         flex-grow: 1;
         flex-shrink: 1;
+        overflow-y: auto;
         flex-basis: auto;
         align-items: center;
     }

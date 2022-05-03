@@ -1,7 +1,7 @@
 <div class="view" *ngIf="selectedDevice">
     <div class="left">
-        <app-device-screen class="screen"></app-device-screen>
-        <app-device-controls></app-device-controls>
+        <app-device-screen [selectedDevice]="selectedDevice" class="screen"></app-device-screen>
+        <app-device-controls [selectedDevice]="selectedDevice"></app-device-controls>
     </div>
     <div class="right">
         <app-device-performance-graph class="graphs"></app-device-performance-graph>

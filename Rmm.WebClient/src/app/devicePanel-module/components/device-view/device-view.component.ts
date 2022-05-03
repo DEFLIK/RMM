@@ -14,8 +14,11 @@ import { DevicesStorageService } from '../../services/deviceStorage/devices-stor
     styleUrls: ['./device-view.component.less']
 })
 export class DeviceViewComponent implements OnInit, OnDestroy {
-    public imageToShow?: string | ArrayBuffer | null;
-    public selectedDevice!: DeviceStaticInfo;
+    // public imageToShow?: string | ArrayBuffer | null;
+    public get selectedDevice(): DeviceStaticInfo {
+        return this._selectedDevice;
+    }
+    private _selectedDevice!: DeviceStaticInfo;
     private _deviceUpdater!: Subscription;
     
     constructor(private _storage: DevicesStorageService, private _screen: DeviceScreenService) { }
@@ -24,7 +27,7 @@ export class DeviceViewComponent implements OnInit, OnDestroy {
         this._deviceUpdater = this._storage
             .onDeviceSelected$
             .subscribe((device: DeviceStaticInfo) => {
-                this.selectedDevice = device;
+                this._selectedDevice = device;
             });
     }
 
