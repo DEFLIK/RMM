@@ -1,6 +1,17 @@
-<canvas #chart
-class="graph-cpu"
-baseChart 
-[options]="lineChartOptions"
-[data]="lineChartData" 
-[type]="lineChartType"></canvas>
+<div class="graph">
+    <canvas #chart
+    class="graph-cpu"
+    baseChart 
+    [options]="lineChartOptions"
+    [data]="lineChartData" 
+    [type]="lineChartType"></canvas>  
+</div>
+
+<div class="graph">
+    <canvas #chart
+    class="graph-gpu"
+    baseChart 
+    [options]="lineChartOptions"
+    [data]="" 
+    [type]="lineChartType"></canvas>  
+</div>
