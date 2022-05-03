@@ -2,8 +2,8 @@
     <span *ngFor="let log of terminalLogs">{{log}}</span>
 </div>
 
-<label class="terminal-input" for="term_inp">
+<label class="terminal-input" for="term_inp" [formGroup]="inputForm">
     <a>></a>
-    <input id="term_inp" type="text">
+    <input (keydown.enter)="executeCommand()" id="term_inp" type="text" formControlName="input">
 </label>
 
