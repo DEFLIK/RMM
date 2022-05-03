@@ -11,7 +11,7 @@ namespace Rmm.Domain.Core.Services.DeviceSystemLogsService
 {
     public class DeviceSystemLogsService : IDeviceSystemLogsService
     {
-        private readonly Dictionary<Guid, DeviceSystemLogs> _connectedDevicesLogs = new Dictionary<Guid, DeviceSystemLogs>();
+        private readonly Dictionary<Guid, DeviceSystemLogs> _connectedDevicesLogs = new();
         private readonly Timer _stateUpdater;
 
         // Заглушка - эмитатор работы девайсов
@@ -28,7 +28,7 @@ namespace Rmm.Domain.Core.Services.DeviceSystemLogsService
                     {
                         CpuPerformanceGraph = new Queue<double>(),
                         SourceDeviceId = device.Id,
-                        TerminalLog = new List<string>() { "testlog1", "testlog2" }
+                        TerminalLog = new List<string>() { $"> Emulated console. Device: {device.Name}" }
                     };
                 }
             }
@@ -63,6 +63,15 @@ namespace Rmm.Domain.Core.Services.DeviceSystemLogsService
             {
                 _connectedDevicesLogs[entity.SourceDeviceId] = entity;
                 return entity.SourceDeviceId;
+            });
+        }
+
+        public Task AddTerminalLog(Guid id, string terminalLog)
+        {
+            return Task.Run(() =>
+            {
+                if (_connectedDevicesLogs.ContainsKey(id))
+                    _connectedDevicesLogs[id].TerminalLog?.Add(terminalLog);
             });
         }
     }
