@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using Rmm.Domain.Core.Models;
 using Rmm.Domain.Core.Services;
 using Rmm.Domain.Core.Services.AuthService;
+using Rmm.Domain.Core.Services.DeviceManipulationService;
 using Rmm.Domain.Core.Services.DeviceScreenService;
 using Rmm.Domain.Core.Services.DeviceStateService;
 using Rmm.Domain.Core.Services.DeviceStaticInfoService;
@@ -63,6 +64,7 @@ namespace Rmm.Domain.Core
             services.AddSingleton<IDeviceSystemLogsService, DeviceSystemLogsService>();
             services.AddSingleton<IDeviceStateService, DeviceStateService>();
             services.AddSingleton<IDeviceScreenService, DeviceScreenService>();
+            services.AddSingleton<IDeviceManiupalationService, DeviceManipulationService>();
             services.AddScoped<IAuthService, AuthService>();
         }
 
