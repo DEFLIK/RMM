@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { catchError, EMPTY, interval, of, Subscription } from 'rxjs';
 import { DeviceStaticInfo } from '../../models/deviceInfo';
 import { DeviceScreenService } from '../../services/deviceScreen/device-screen.service';
@@ -11,24 +11,26 @@ import { DevicesStorageService } from '../../services/deviceStorage/devices-stor
     styleUrls: ['./device-screen.component.less']
 })
 export class DeviceScreenComponent implements OnInit, OnDestroy {
+    @Input()
+    public selectedDevice!: DeviceStaticInfo;
     public imageToShow!: string | ArrayBuffer | null;
     public screenMsPerFrame: number = 3000;
     private _screenUpdater!: Subscription;
     private _idUpdater!: Subscription;
-    private _selectedDeviceId!: string | null;
+    // private _selectedDeviceId!: string | null;
 
     constructor(
         private _screen: DeviceScreenService,
         private _storage: DevicesStorageService) { }
 
     public ngOnInit(): void {
-        this._selectedDeviceId = this._storage.selectedDeviceId;
+        // this._selectedDeviceId = this._storage.selectedDeviceId;
 
         this.startStream();
         this._idUpdater = this._storage
             .onDeviceSelected$
             .subscribe((device: DeviceStaticInfo) => {
-                this._selectedDeviceId = device.id;
+                this.startStream();
             });
     }
 
@@ -38,11 +40,11 @@ export class DeviceScreenComponent implements OnInit, OnDestroy {
     }
 
     public updateScreenImage(): void {
-        if (!this._selectedDeviceId) {
+        if (!this.selectedDevice) {
             return;
         }
         this._screen
-            .get(this._selectedDeviceId)
+            .get(this.selectedDevice.id)
             .pipe(catchError((response: HttpErrorResponse) => {
                 this._screenUpdater.unsubscribe();
                 this.imageToShow = null;
