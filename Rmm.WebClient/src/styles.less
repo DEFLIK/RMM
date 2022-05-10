@@ -41,6 +41,20 @@ p {
     padding: 0;
 }
 
+button {
+    font-size: 20px;
+    background-color: transparent;
+    border: solid 2px @color-main;
+    border-radius: 5px;
+    color: @color-main;
+    cursor: pointer;
+
+    &:hover {
+        color: @color-hover;
+        border-color: @color-hover;
+    }
+}
+
 .main-frame {
     display: flex;
     align-items: center;
