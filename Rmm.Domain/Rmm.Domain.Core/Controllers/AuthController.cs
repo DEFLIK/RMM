@@ -77,7 +77,11 @@ namespace Rmm.Domain.Core.Controllers
         public async Task<ActionResult<bool>> IsSessionOpen(string token)
         {
             //var token = Request.Headers["authorization"].ToString();
-            return await _serivce.IsSessionOpenAsync(token);
+            var open = await _serivce.IsSessionOpenAsync(token);
+
+            if (open)
+                return Ok();
+            return BadRequest();
         }
 
         private static string GetSessionJson(Session session) =>
