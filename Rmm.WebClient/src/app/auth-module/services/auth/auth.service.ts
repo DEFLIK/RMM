@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { concat, Observable, of, throwError } from 'rxjs';
 import { catchError, concatMap, delay, retry, retryWhen, take } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { SessionCacheService } from '../sessionCacheService/sessionCache.service
 import { EncryptionService } from '../encrypt/encryption.service';
 import { Router } from '@angular/router';
 import { RequestService } from 'src/app/global-services/request/request.service';
+import { RequestMethodType } from 'src/app/global-services/request/models/request-method';
 
 @Injectable({
     providedIn: 'root'
@@ -21,25 +22,25 @@ export class AuthService {
         private _router: Router
     ) {}
 
-    public async registerNewUserAsync(userName: string, email: string, pass: string): Promise<void> {
-        const encryptedPass: string = await this._encr.encryptStringAsync(pass);
-        const answer: Observable<void> = this._req.get(
-            `api/auth/registerNewUser?userName=${userName}&email=${email}&hash=${encryptedPass}`
-        );
-
-        answer.subscribe(() => this.openSessionAsync(userName, pass));
+    public registerNewUser(userName: string, email: string, pass: string): void {
+        const encryptedPass: string = this._encr.encryptString(pass);
+        this._req.request<void>({
+            url: `api/auth/registerNewUser?userName=${userName}&email=${email}&hash=${encryptedPass}`,
+            method: RequestMethodType.get
+        }).subscribe(() => this.openSession(userName, pass));
     }
 
-    public async openSessionAsync(userName: string, pass: string): Promise<void> {
-        const encryptedPass: string = await this._encr.encryptStringAsync(pass);
-        const answer: Observable<ISession> = this._req.get<ISession>(
-            `api/auth/openSession?userName=${userName}&hash=${encryptedPass}`
-        );
-        
-        answer.subscribe((resp: ISession) => {
-            this.isAuthorized = true;
-            this._cacher.cacheSession(resp);
-            this._router.navigateByUrl('/devices');
+    public openSession(userName: string, pass: string): void {
+        const encryptedPass: string = this._encr.encryptString(pass);
+        this._req.request<ISession>({
+            url: `api/auth/openSession?userName=${userName}&hash=${encryptedPass}`,
+            method: RequestMethodType.get
+        }).subscribe((resp: HttpResponse<ISession>) => {
+            if (resp && resp.body) {
+                this.isAuthorized = true;
+                this._cacher.cacheSession(resp.body);
+                this._router.navigateByUrl('/devices');
+            }
         });
     }
 
@@ -48,11 +49,11 @@ export class AuthService {
     }
 
     public closeSession(session: ISession): void {
-        const answer: Observable<void> = this._req.get<void>(
-            `api/auth/closeSession?token=${session.token}`
-        );
-        
-        answer.subscribe(() => {
+        this._req.request<void>({
+            url: `api/auth/closeSession?token=${session.token}`,
+            method: RequestMethodType.get
+        }).subscribe(() => {
+            console.log('quit');
             this.isAuthorized = false;
             this._cacher.removeSession();
             this._router.navigateByUrl('');
@@ -60,16 +61,19 @@ export class AuthService {
     }
 
     public tryAutoAuthorize(): void {
-        const answer: Observable<boolean> = this.isSessionOpen(this._cacher.getSession());
-        answer.subscribe((ans: boolean) => {
-            if (ans) {
-                this.isAuthorized = true;
-                this._router.navigateByUrl('/devices');
-            }
-        });
+        this.isSessionOpen(this._cacher.getSession())
+            .subscribe((resp: HttpResponse<boolean>) => {
+                if (resp.ok) {
+                    this.isAuthorized = true;
+                    this._router.navigateByUrl('/devices');
+                }
+            });
     }
 
-    public isSessionOpen(session: ISession): Observable<boolean> {
-        return this._req.get<boolean>(`api/auth/isSessionOpen?token=${session.token}`);
+    public isSessionOpen(session: ISession): Observable<HttpResponse<boolean>> {
+        return this._req.request<boolean>({
+            url: `api/auth/isSessionOpen?token=${session.token}`,
+            method: RequestMethodType.get
+        });
     }
 }

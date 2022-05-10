@@ -25,7 +25,7 @@ export class RegComponent {
     ) {}
 
     public submit(): void {
-        this._auth.registerNewUserAsync(
+        this._auth.registerNewUser(
             this.regForm.get('userName')?.value, 
             this.regForm.get('userEmail')?.value, 
             this.regForm.get('userPassword')?.value);

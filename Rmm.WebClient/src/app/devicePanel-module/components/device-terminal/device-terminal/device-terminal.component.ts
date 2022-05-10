@@ -1,3 +1,4 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { interval, Subscription } from 'rxjs';
@@ -54,8 +55,10 @@ export class DeviceTerminalComponent implements OnInit, OnDestroy {
         if (this._selectedDeviceId && inputCommand) {
             this._manipulation
                 .execute(this._selectedDeviceId, inputCommand)
-                .subscribe((logs: string[]) => {
-                    this.terminalLogs = logs;
+                .subscribe((resp: HttpResponse<string[]>) => {
+                    if (resp.ok && resp.body) {
+                        this.terminalLogs = resp.body;
+                    }
                 }); 
         }
     }

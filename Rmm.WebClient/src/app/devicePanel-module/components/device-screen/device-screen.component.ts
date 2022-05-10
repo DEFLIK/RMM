@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { catchError, EMPTY, interval, of, Subscription } from 'rxjs';
 import { DeviceStaticInfo } from '../../models/deviceInfo';
@@ -51,14 +51,14 @@ export class DeviceScreenComponent implements OnInit, OnDestroy {
 
                 return EMPTY;
             }))
-            .subscribe((blob: Blob) => {
-                const reader: FileReader = new FileReader();
-                reader.addEventListener('load', () => {
-                    this.imageToShow = reader.result;
-                });
-
-                if (blob) {
-                    reader.readAsDataURL(blob);
+            .subscribe((resp: HttpResponse<Blob>) => {
+                if (resp.ok && resp.body) {
+                    const reader: FileReader = new FileReader();
+                    reader.addEventListener('load', () => {
+                        this.imageToShow = reader.result;
+                    });
+    
+                    reader.readAsDataURL(resp.body);
                 }
             });
     }

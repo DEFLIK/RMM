@@ -1,3 +1,4 @@
+import { HttpResponse } from '@angular/common/http';
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { interval, Observable, share, Subject, Subscription, switchMap } from 'rxjs';
 import { DeviceStaticInfo } from '../../models/deviceInfo';
@@ -55,29 +56,32 @@ export class DevicesStorageService implements OnDestroy {
     }
 
     public loadMoreDevices(): void {
-        const ans: Observable<DeviceStaticInfo[]> = this._info.getRange(
+        this._info.getRange(
             this._devices.length, 
-            this._appendCount);
-
-        ans.subscribe((devices: DeviceStaticInfo[]) => {
-            devices.forEach((device: DeviceStaticInfo) => {
-                this._devices.push(device);
-                this._devicesState.set(device.id, new DeviceState());
-                this.refreshDevicesState();
+            this._appendCount)
+            .subscribe((resp: HttpResponse<DeviceStaticInfo[]>) => {
+                if (resp.ok && resp.body) {
+                    resp.body.forEach((device: DeviceStaticInfo) => {
+                        this._devices.push(device);
+                        this._devicesState.set(device.id, new DeviceState());
+                        this.refreshDevicesState();
+                    });
+                }
             });
-        });
     }
 
     public loadAllDevices(): void {
-        const ans: Observable<DeviceStaticInfo[]> = this._info.getAll();
-
-        ans.subscribe((devices: DeviceStaticInfo[]) => {
-            devices.forEach((device: DeviceStaticInfo) => {
-                this._devices.push(device);
-                this._devicesState.set(device.id, new DeviceState());
-                this.refreshDevicesState();
+        this._info
+            .getAll()
+            .subscribe((resp: HttpResponse<DeviceStaticInfo[]>) => {
+                if (resp.ok && resp.body) {
+                    resp.body.forEach((device: DeviceStaticInfo) => {
+                        this._devices.push(device);
+                        this._devicesState.set(device.id, new DeviceState());
+                        this.refreshDevicesState();
+                    });
+                }
             });
-        });
     }
 
     public refreshDevicesState(): void {
@@ -86,8 +90,10 @@ export class DevicesStorageService implements OnDestroy {
         for (let i: number = 0; i < this._devices.length; i++) {
             this._state
                 .get(this._devices[i].id)
-                .subscribe((refreshedDevice: DeviceState) => {
-                    Object.assign(this._devicesState.get(this._devices[i].id), refreshedDevice);
+                .subscribe((resp: HttpResponse<DeviceState>) => {
+                    if (resp.ok && resp.body) {
+                        Object.assign(this._devicesState.get(this._devices[i].id), resp.body);
+                    }
                 });
         }
     }
@@ -96,8 +102,10 @@ export class DevicesStorageService implements OnDestroy {
         if (this._selectedDevice) {
             this._systemLogs
                 .get(this._selectedDevice.id)
-                .subscribe((logs: DeviceSystemLogs) => {
-                    this.onSelectedLogsRefresh$.next(logs);
+                .subscribe((resp: HttpResponse<DeviceSystemLogs>) => {
+                    if (resp.ok && resp.body) {
+                        this.onSelectedLogsRefresh$.next(resp.body);
+                    }
                 });
         }
     }

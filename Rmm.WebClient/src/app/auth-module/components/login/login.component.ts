@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     }
 
     public submit(): void {
-        this._auth.openSessionAsync(
+        this._auth.openSession(
             this.loginForm.get('userName')?.value, 
             this.loginForm.get('userPassword')?.value);
     }
