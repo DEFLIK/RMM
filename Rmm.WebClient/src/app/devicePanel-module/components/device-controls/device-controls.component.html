@@ -5,7 +5,7 @@
 </div>
 
 <div class="controls">
-    <button class="sleep">Sleep</button>
-    <button class="shut">Shutdown</button>
-    <button class="restart">Restart</button>
+    <button class="sleep" (click)="execute('timeout')">Sleep</button>
+    <button class="shut" (click)="execute('shutdown -s')">Shutdown</button>
+    <button class="restart" (click)="execute('shutdown -r')">Restart</button>
 </div>
