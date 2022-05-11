@@ -4,5 +4,5 @@ export class DeviceStaticInfo {
     public id!: string;
     public name?: string;
     public os?: string;
-    public coordinates?: string[];
+    public coordinates?: number[];
 }
