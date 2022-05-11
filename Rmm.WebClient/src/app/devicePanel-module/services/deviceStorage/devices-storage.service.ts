@@ -10,7 +10,7 @@ import { DeviceStateService } from '../deviceState/device-state.service';
 
 @Injectable()
 export class DevicesStorageService implements OnDestroy {
-    public get devices(): DeviceStaticInfo[] {
+    public get devices(): DeviceStaticInfo[] | undefined {
         return this._devices;
     }
     public get devicesState(): Map<string, DeviceState> {
@@ -28,7 +28,7 @@ export class DevicesStorageService implements OnDestroy {
     public elapsedUpdateSeconds: number = 0;
     private _appendCount: number = 3;
     private _selectedDevice?: DeviceStaticInfo;
-    private _devices: DeviceStaticInfo[] = new Array<DeviceStaticInfo>();
+    private _devices?: DeviceStaticInfo[];
     private _devicesState: Map<string, DeviceState> = new Map<string, DeviceState>();
     private _updateIntervalMs: number = 1000;
     private _stateUpdater!: Subscription;
@@ -47,8 +47,6 @@ export class DevicesStorageService implements OnDestroy {
                 //this.refreshDevicesState();
                 this.refreshSelectedLogs();
             });
-
-        this.loadAllDevices();
     }
 
     public ngOnDestroy(): void {
@@ -57,12 +55,16 @@ export class DevicesStorageService implements OnDestroy {
 
     public loadMoreDevices(): void {
         this._info.getRange(
-            this._devices.length, 
+            this._devices?.length ?? 0, 
             this._appendCount)
             .subscribe((resp: HttpResponse<DeviceStaticInfo[]>) => {
                 if (resp.ok && resp.body) {
+                    if (!this._devices) {
+                        this._devices = [];
+                    }
+
                     resp.body.forEach((device: DeviceStaticInfo) => {
-                        this._devices.push(device);
+                        this._devices?.push(device);
                         this._devicesState.set(device.id, new DeviceState());
                         this.refreshDevicesState();
                     });
@@ -75,8 +77,9 @@ export class DevicesStorageService implements OnDestroy {
             .getAll()
             .subscribe((resp: HttpResponse<DeviceStaticInfo[]>) => {
                 if (resp.ok && resp.body) {
+                    this._devices = resp.body;
+
                     resp.body.forEach((device: DeviceStaticInfo) => {
-                        this._devices.push(device);
                         this._devicesState.set(device.id, new DeviceState());
                         this.refreshDevicesState();
                     });
@@ -87,11 +90,15 @@ export class DevicesStorageService implements OnDestroy {
     public refreshDevicesState(): void {
         this.elapsedUpdateSeconds = 0;
 
+        if (!this._devices) {
+            return;
+        }
+        
         for (let i: number = 0; i < this._devices.length; i++) {
             this._state
                 .get(this._devices[i].id)
                 .subscribe((resp: HttpResponse<DeviceState>) => {
-                    if (resp.ok && resp.body) {
+                    if (resp.ok && resp.body && this._devices) {
                         Object.assign(this._devicesState.get(this._devices[i].id), resp.body);
                     }
                 });
