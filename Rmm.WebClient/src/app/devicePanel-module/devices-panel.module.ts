@@ -19,6 +19,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { DeviceScreenComponent } from './components/device-screen/device-screen.component';
 import { DeviceViewComponent } from './components/device-view/device-view.component';
 import { DeviceControlsComponent } from './components/device-controls/device-controls.component';
+import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import { DeviceControlsComponent } from './components/device-controls/device-con
         DeviceControlsComponent
     ],
     imports: [
+        AngularYandexMapsModule,
         ReactiveFormsModule,
         CommonModule,
         NgChartsModule,

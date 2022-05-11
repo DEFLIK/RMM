@@ -2,6 +2,11 @@
     <span>{{ selectedDevice.id }}</span>
     <span>{{ selectedDevice.name }}</span>
     <span>{{ selectedDevice.os }}</span>
+    <div class="map">
+        <ya-map [center]="selectedDevice.coordinates ?? [0, 0]" [zoom]="12">
+            <ya-placemark [geometry]="selectedDevice.coordinates ?? [0, 0]"></ya-placemark>
+        </ya-map>
+    </div>
 </div>
 
 <div class="controls">

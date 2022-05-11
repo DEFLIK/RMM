@@ -6,6 +6,7 @@
     display: flex;
     width: 70%;
     border: solid 2px @color-main;
+    border-radius: 5px;
 
     .info {
         padding: 10px;
@@ -16,6 +17,19 @@
 
         span {
             border-bottom: solid 1px @color-main;
+        }
+
+        .map {
+            width: 100%;
+            flex: 1 1 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 2px 0 gray;
+
+            ya-map {
+                width: 100%;
+                height: 100%;
+            }
         }
     }
 
