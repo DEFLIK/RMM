@@ -11,7 +11,7 @@
         </div>
     </div>
     
-    <div class="devices-list">
+    <div class="devices-list" *ngIf="devices; else devicesSkeleton">
         <app-device-element 
             *ngFor="let device of devices | deviceFilter : searchCriteria" 
             #device
@@ -26,4 +26,14 @@
             }" >
         </app-device-element>
     </div>
+    <ng-template #devicesSkeleton class="devices-list sk">
+        <div class="devices-element sk" *ngFor="let i of [].constructor(30)">
+            <div class="sk-line1">
+
+            </div>
+            <div class="sk-line2">
+
+            </div>
+        </div>
+    </ng-template>
 </div>

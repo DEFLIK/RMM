@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { catchError, interval, Observable, of } from 'rxjs';
 import { DeviceStatus } from '../../enums/deviceStatus';
@@ -13,10 +13,10 @@ import { DeviceElementComponent } from '../device-element/device-element.compone
     templateUrl: './devices-list.component.html',
     styleUrls: ['./devices-list.component.less']
 })
-export class DevicesListComponent {
+export class DevicesListComponent implements AfterViewInit {
     @ViewChildren('device')
     public devicesElements!: QueryList<DeviceElementComponent>;
-    public get devices(): DeviceStaticInfo[] {
+    public get devices(): DeviceStaticInfo[] | undefined {
         return this._storage.devices;
     };
     public get devicesState(): Map<string, DeviceState> {
@@ -34,6 +34,10 @@ export class DevicesListComponent {
     }
 
     constructor(private _storage: DevicesStorageService) { }
+    public ngAfterViewInit(): void {
+        console.log(this.devices);
+        setTimeout(() => this._storage.loadAllDevices(), 200000);
+    }
 
     public loadMoreDevices(): void {
         this._storage.loadMoreDevices();
