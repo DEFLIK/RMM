@@ -63,6 +63,77 @@ button {
     background-color: @color-bg;
 }
 
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:after {
+        height: 50%;
+        width: 50%;
+        display: block;
+        border-radius: 50%;
+        border: 6px solid white;
+        border-color: @color-active transparent @color-active transparent;
+        content: " ";
+        animation: spin 1.2s linear infinite;
+    }
+}
+
+.sk {
+    background-color: white;
+
+    border: none;
+
+    &-line35 {
+        .line(35%);
+    }
+
+    &-line75 {
+        .line(75%);
+    }
+
+    .line(@width-px) {
+        width: @width-px;
+        height: 10px;
+        background-color: @color-main;
+        border-radius: 10px;
+    }
+
+    &-el {
+        &:after {
+            position: fixed;
+            height: 10px;
+            width: 100%;
+            animation: shimmer 2s infinite;
+            transform: translateX(-100%);
+            content: '';
+            background-image: linear-gradient(
+                90deg,
+                rgba(#fff, 0) 0,
+                rgba(#fff, 0.2) 20%,
+                rgba(#fff, 0.5) 60%,
+                rgba(#fff, 0)
+            );
+        }
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
 @font-face {
     font-family: 'Sansation';
     src: url('./assets/fonts/Sansation_Regular.ttf');
