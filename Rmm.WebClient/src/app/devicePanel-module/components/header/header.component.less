@@ -26,4 +26,32 @@
             border-right: solid 3px @color-bg-dark;
         }
     }
+
+    .routes {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        height: 100%;
+
+        .route {
+            height: 70%;
+            cursor: pointer;
+
+            img {
+                height: 100%;
+
+                &:hover {
+                    .apply-active();
+                }
+            }
+        }
+
+        .selected {
+            .apply-active();
+        }
+    }
+
+    .apply-active() {
+        filter: invert(72%) sepia(11%) saturate(2053%) hue-rotate(165deg) brightness(130%) contrast(100%);
+    }
 }

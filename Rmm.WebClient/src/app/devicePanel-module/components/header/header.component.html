@@ -4,5 +4,25 @@
         <div class="head-logo-line"></div>
         <span>{{ currentGroupId }}</span>
     </div>
+    <div class="routes">
+        <div class="route">
+            <img 
+                routerLink="view" 
+                src="../../../../assets/svg/view_route.svg" 
+                alt="view"
+                [ngClass]="{
+                    'selected': route === '/devices/view'
+                }">
+        </div>
+        <div class="route">
+            <img 
+                routerLink="map" 
+                src="../../../../assets/svg/map_route.svg" 
+                alt="map"
+                [ngClass]="{
+                    'selected': route === '/devices/map'
+                }">
+        </div>
+    </div>
     <button (click)="logOut()">Logout</button>
 </div>

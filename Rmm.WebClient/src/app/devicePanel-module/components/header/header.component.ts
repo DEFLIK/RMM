@@ -12,11 +12,14 @@ export class HeaderComponent {
     public get currentGroupId(): string {
         return 'Not connected to any group';
     }
+    public get route(): string {
+        return this._router.url;
+    }
 
     constructor(
         private _router: Router,
         private _auth: AuthService,
-        // private _sessionStorage: SessionCacheService
+        private _storage: SessionCacheService
     ) { }
 
     public logOut(): void {
