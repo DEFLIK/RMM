@@ -11,7 +11,7 @@ import { DeviceElementComponent } from '../device-element/device-element.compone
 @Component({
     selector: 'app-devices-list',
     templateUrl: './devices-list.component.html',
-    styleUrls: ['./devices-list.component.less']
+    styleUrls: ['./devices-list.component.less'],
 })
 export class DevicesListComponent implements AfterViewInit {
     @ViewChildren('device')
@@ -23,6 +23,7 @@ export class DevicesListComponent implements AfterViewInit {
         return this._storage.devicesState;
     }
     public statusTypes: typeof DeviceStatus = DeviceStatus;
+    public selectedDeviceId: string = '';
     public settingsForm: FormGroup = new FormGroup({
         searchInput: new FormControl('')
     });
@@ -35,8 +36,7 @@ export class DevicesListComponent implements AfterViewInit {
 
     constructor(private _storage: DevicesStorageService) { }
     public ngAfterViewInit(): void {
-        console.log(this.devices);
-        setTimeout(() => this._storage.loadAllDevices(), 200000);
+        this._storage.loadAllDevices();
     }
 
     public loadMoreDevices(): void {
@@ -52,6 +52,7 @@ export class DevicesListComponent implements AfterViewInit {
     }
 
     public selectDevice(device: DeviceStaticInfo): void {
+        this.selectedDeviceId = device.id;
         this._storage.selectDevice(device);
     }
 }

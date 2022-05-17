@@ -22,16 +22,17 @@
                 'enabled': devicesState.get(device.id)?.status === statusTypes.enabled,
                 'disabled': devicesState.get(device.id)?.status === statusTypes.disabled,
                 'blocked': devicesState.get(device.id)?.status === statusTypes.blocked,
-                'sleep': devicesState.get(device.id)?.status === statusTypes.sleep
+                'sleep': devicesState.get(device.id)?.status === statusTypes.sleep,
+                'selected': device.id === selectedDeviceId
             }" >
         </app-device-element>
     </div>
     <ng-template #devicesSkeleton class="devices-list sk">
         <div class="devices-element sk" *ngFor="let i of [].constructor(30)">
-            <div class="sk-line1">
+            <div class="sk-line35 sk-el">
 
             </div>
-            <div class="sk-line2">
+            <div class="sk-line75 sk-el">
 
             </div>
         </div>
