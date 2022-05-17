@@ -5,7 +5,10 @@
             <app-devices-list></app-devices-list>
         </div>
         <div class="dp-body-right">
-            <app-device-view></app-device-view>
+            <!-- <div [routerLink]="''">start</div>
+            <app-device-view [routerLink]="'view'"></app-device-view>
+            <app-devices-map [routerLink]="'map'"></app-devices-map> -->
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>
