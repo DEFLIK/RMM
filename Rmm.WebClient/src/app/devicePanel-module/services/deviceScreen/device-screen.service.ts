@@ -9,7 +9,6 @@ import { DeviceScreen } from '../../models/deviceScreen';
     providedIn: 'root'
 })
 export class DeviceScreenService {
-
     constructor(private _req: RequestService) { }
 
     public set(state: DeviceScreen): Observable<HttpResponse<void>> {

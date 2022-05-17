@@ -20,6 +20,7 @@ import { DeviceScreenComponent } from './components/device-screen/device-screen.
 import { DeviceViewComponent } from './components/device-view/device-view.component';
 import { DeviceControlsComponent } from './components/device-controls/device-controls.component';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
+import { DevicesMapComponent } from './components/devices-map/devices-map.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import { AngularYandexMapsModule } from 'angular8-yandex-maps';
         DeviceTerminalComponent,
         SettingsComponent,
         DeviceScreenComponent,
-        DeviceControlsComponent
+        DeviceControlsComponent,
+        DevicesMapComponent
     ],
     imports: [
         AngularYandexMapsModule,
@@ -44,13 +46,26 @@ import { AngularYandexMapsModule } from 'angular8-yandex-maps';
         RouterModule.forChild([
             {
                 path: '', 
-                component: DevicesPanelComponent
+                component: DevicesPanelComponent,
+                children: [
+                    {
+                        path: 'map',
+                        component: DevicesMapComponent
+                    },
+                    {
+                        path: 'view',
+                        component: DeviceViewComponent
+                    },
+                    {
+                        path: '**',
+                        redirectTo: 'view'
+                    }
+                ]
             }
         ])
     ],
     bootstrap: [DevicesPanelComponent],
     providers: [
-        DevicesStorageService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

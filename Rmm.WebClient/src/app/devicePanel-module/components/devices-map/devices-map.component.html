@@ -1,0 +1,3 @@
+<ya-map [center]="selectedDevice?.coordinates ?? [0, 0]" [zoom]="3">
+    <ya-placemark *ngFor="let device of devices" [geometry]="device.coordinates ?? [0, 0]"></ya-placemark>
+</ya-map>
