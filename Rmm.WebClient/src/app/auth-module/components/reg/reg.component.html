@@ -22,3 +22,8 @@
     </ng-template>
     <a class="auth-anchor" [routerLink] = "'/auth/login'">Already in?</a>
 </div>
+
+<div class="auth-process" *ngIf="isProcessing">
+    <div class="loader" style="width: 70px; height: 70px"></div>
+    <span>Creating account</span>
+</div>

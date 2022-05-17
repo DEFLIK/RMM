@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ISession } from '../../interfaces/ISession';
 import { AuthService } from '../../services/auth/auth.service';
@@ -10,7 +10,10 @@ import { AuthService } from '../../services/auth/auth.service';
     styleUrls: ['./reg.component.less']
 })
 export class RegComponent {
-    
+    public get isProcessing(): boolean {
+        return this._auth.isProcessing;
+    }
+
     public regForm: FormGroup = new FormGroup({
         userName: new FormControl('', Validators.required),
         userEmail: new FormControl('', [
@@ -18,7 +21,7 @@ export class RegComponent {
             Validators.pattern('[a-zA-Z_]+@[a-zA-Z_]+?.[a-zA-Z]{2,3}')
         ]),
         userPassword: new FormControl('', Validators.required)
-    });;
+    });
 
     constructor(
         private _auth: AuthService

@@ -22,3 +22,9 @@
     </ng-template>
     <a class="auth-anchor" [routerLink] = "'/auth/register'">No account?</a>
 </div>
+
+<div class="auth-process" *ngIf="isProcessing">
+    <div class="loader" style="width: 70px; height: 70px"></div>
+    <span>Authorization</span>
+</div>
+
