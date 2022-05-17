@@ -13,6 +13,7 @@ import { DevicesStorageService } from '../../services/deviceStorage/devices-stor
 export class DeviceScreenComponent implements OnInit, OnDestroy {
     @Input()
     public selectedDevice!: DeviceStaticInfo;
+    public isProcessing: boolean = false;
     public imageToShow!: string | ArrayBuffer | null;
     public screenMsPerFrame: number = 3000;
     private _screenUpdater!: Subscription;
@@ -43,29 +44,36 @@ export class DeviceScreenComponent implements OnInit, OnDestroy {
         if (!this.selectedDevice) {
             return;
         }
+
+        this.isProcessing = true;
         this._screen
             .get(this.selectedDevice.id)
             .pipe(catchError((response: HttpErrorResponse) => {
                 this._screenUpdater.unsubscribe();
                 this.imageToShow = null;
+                this.isProcessing = false;
 
                 return EMPTY;
             }))
-            .subscribe((resp: HttpResponse<Blob>) => {
-                if (resp.ok && resp.body) {
-                    const reader: FileReader = new FileReader();
-                    reader.addEventListener('load', () => {
-                        this.imageToShow = reader.result;
-                    });
-    
-                    reader.readAsDataURL(resp.body);
-                }
+            .subscribe({
+                next: (resp: HttpResponse<Blob>) => {
+                    if (resp.ok && resp.body) {
+                        const reader: FileReader = new FileReader();
+                        reader.addEventListener('load', () => {
+                            this.imageToShow = reader.result;
+                        });
+
+                        reader.readAsDataURL(resp.body);
+                    }
+                    this.isProcessing = false;
+                } 
             });
     }
 
     public startStream(): void {
         this.updateScreenImage();
 
+        this._screenUpdater?.unsubscribe();
         this._screenUpdater = interval(this.screenMsPerFrame)
             .subscribe(() => {
                 this.updateScreenImage();

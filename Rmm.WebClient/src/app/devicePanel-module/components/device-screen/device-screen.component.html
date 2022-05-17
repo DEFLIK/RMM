@@ -1,5 +1,9 @@
 <img *ngIf="imageToShow" [src]="imageToShow">
-<div (click)="startStream()" class="not-found" *ngIf="!imageToShow">
+<div class="process" *ngIf="isProcessing">
+    <div class="loader" style="width: 40px; height: 40px;"></div>
+    <span>Loading</span>
+</div>
+<div (click)="startStream()" class="not-found" *ngIf="!imageToShow && !isProcessing">
     <img src="../../../../assets/svg/noimage.svg">
     <span>No image, click to retry</span>
 </div>
