@@ -28,7 +28,7 @@ export class DeviceTerminalComponent implements OnInit, OnDestroy {
     ) { }
 
     public ngOnInit(): void { 
-        this._selectedDeviceId = this._storage.selectedDeviceId;
+        this._selectedDeviceId = this._storage.selectedDevice?.id ?? '';
 
         this._logsUpdater = this._storage
             .onSelectedLogsRefresh$
@@ -50,7 +50,7 @@ export class DeviceTerminalComponent implements OnInit, OnDestroy {
 
     public executeCommand(): void {
         const inputCommand: string = this.inputForm.get('input')?.value;
-        console.log(inputCommand);
+        this.inputForm.get('input')?.setValue('');
 
         if (this._selectedDeviceId && inputCommand) {
             this._manipulation
