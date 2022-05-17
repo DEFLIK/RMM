@@ -16,12 +16,8 @@ export class DevicesStorageService implements OnDestroy {
     public get devicesState(): Map<string, DeviceState> {
         return this._devicesState;
     }
-    public get selectedDeviceId(): string | null {
-        if (!this._selectedDevice) {
-            return null;
-        }
-
-        return this._selectedDevice.id;
+    public get selectedDevice(): DeviceStaticInfo | undefined {
+        return this._selectedDevice;
     }
     public onDeviceSelected$!: Subject<DeviceStaticInfo>;
     public onSelectedLogsRefresh$!: Subject<DeviceState>;
