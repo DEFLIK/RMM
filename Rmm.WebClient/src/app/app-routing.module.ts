@@ -4,18 +4,19 @@ import { AuthGuard } from './auth-module/guards/auth.guard';
 
 const routes: Routes = [
     { 
-        path: '', 
-        redirectTo: 'auth',
-        pathMatch: 'full'
-    },
-    { 
         path: 'devices', 
         canLoad: [AuthGuard],
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
         loadChildren: () => import('./devicePanel-module/devices-panel.module').then(m => m.DevicesPanelModule)
     },
     { 
         path: 'auth', 
         loadChildren: () => import('./auth-module/auth.module').then(m => m.AuthModule) 
+    },
+    { 
+        path: '**', 
+        redirectTo: 'devices'
     }
 ];
 
