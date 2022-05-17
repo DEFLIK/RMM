@@ -5,6 +5,8 @@ import { RegComponent } from './components/reg/reg.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
+import { AuthComponent } from './auth.component';
+import { AppRoutingModule } from '../app-routing.module';
 
 
 
@@ -12,7 +14,6 @@ import { AuthInterceptor } from './services/auth/auth.interceptor';
     declarations: [LoginComponent, RegComponent],
     imports: [
         CommonModule, 
-        RouterModule,
         ReactiveFormsModule,
         RouterModule.forChild([
             { path: '', redirectTo: 'login' },
