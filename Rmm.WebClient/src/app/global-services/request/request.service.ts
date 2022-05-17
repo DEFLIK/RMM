@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable, isDevMode } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError, EMPTY, map, merge, Observable, of, share, skipWhile, Subject, takeUntil, throwError } from 'rxjs';
 import { ContentType } from './models/content-type';
 import { IRequestOptions } from './models/request-options';
@@ -14,7 +15,8 @@ export class RequestService {
 
     /** Конструктор класса */
     constructor(
-        protected http: HttpClient
+        protected http: HttpClient,
+        private _router: Router
     ) { }
 
     /** Метод для отписки от всех запросов */
@@ -69,7 +71,9 @@ export class RequestService {
 
         return (this.http.request<TResponse>(request) as Observable<HttpResponse<TResponse>>)
             .pipe(
-                skipWhile((event: HttpResponse<TResponse>) => event.type !== HttpEventType.Response),
+                skipWhile((event: HttpResponse<TResponse>) => {
+                    return event.type !== HttpEventType.Response;
+                }),
                 map((value: HttpResponse<TResponse>) => {
 
                     if (isDevMode()) {
@@ -79,7 +83,11 @@ export class RequestService {
                         }
                         log['request'] = { requestParams, httpOptions };
                         log['response'] = value;
-                        console.log(log);
+                        console.log('ans:', log);
+                    }
+
+                    if (value.status === 401) {
+                        this._router.navigateByUrl('/auth/login');
                     }
 
                     return value;
