@@ -81,7 +81,7 @@ namespace Rmm.Domain.Core.Controllers
 
             if (open)
                 return Ok();
-            return BadRequest();
+            return NotFound();
         }
 
         private static string GetSessionJson(Session session) =>
