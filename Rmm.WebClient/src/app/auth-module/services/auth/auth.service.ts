@@ -13,7 +13,7 @@ import { RequestMethodType } from 'src/app/global-services/request/models/reques
     providedIn: 'root'
 })
 export class AuthService {
-    public isAuthorized: boolean = false;
+    public isProcessing: boolean = false;
 
     constructor(
         private _req: RequestService,
@@ -23,24 +23,39 @@ export class AuthService {
     ) {}
 
     public registerNewUser(userName: string, email: string, pass: string): void {
+        this.isProcessing = true;
         const encryptedPass: string = this._encr.encryptString(pass);
         this._req.request<void>({
             url: `api/auth/registerNewUser?userName=${userName}&email=${email}&hash=${encryptedPass}`,
             method: RequestMethodType.get
-        }).subscribe(() => this.openSession(userName, pass));
+        }).subscribe({
+            next: (resp: HttpResponse<void>) => {
+                if (resp.ok) {
+                    this.openSession(userName, pass);
+                }
+                
+                this.isProcessing = false;
+            },
+            error: () => this.isProcessing = false
+        });
     }
 
     public openSession(userName: string, pass: string): void {
+        this.isProcessing = true;
         const encryptedPass: string = this._encr.encryptString(pass);
         this._req.request<ISession>({
             url: `api/auth/openSession?userName=${userName}&hash=${encryptedPass}`,
             method: RequestMethodType.get
-        }).subscribe((resp: HttpResponse<ISession>) => {
-            if (resp && resp.body) {
-                this.isAuthorized = true;
-                this._cacher.cacheSession(resp.body);
-                this._router.navigateByUrl('/devices');
-            }
+        }).subscribe({
+            next: (resp: HttpResponse<ISession>) => {
+                if (resp && resp.body) {
+                    console.log(resp.body);
+                    this._cacher.cacheSession(resp.body);
+                    this._router.navigateByUrl('');
+                    this.isProcessing = false;
+                }
+            },
+            error: () => this.isProcessing = false
         });
     }
 
@@ -49,31 +64,48 @@ export class AuthService {
     }
 
     public closeSession(session: ISession): void {
+        this.isProcessing = true;
         this._req.request<void>({
             url: `api/auth/closeSession?token=${session.token}`,
             method: RequestMethodType.get
-        }).subscribe(() => {
-            console.log('quit');
-            this.isAuthorized = false;
-            this._cacher.removeSession();
-            this._router.navigateByUrl('');
+        }).subscribe({
+            next: () => {
+            // this.isAuthorized = false;
+                this._req.unsubscribeAll();
+                this._cacher.removeSession();
+                this._router.navigateByUrl('auth');
+                this.isProcessing = false;
+            },
+            error: () => this.isProcessing = false
         });
     }
 
-    public tryAutoAuthorize(): void {
-        this.isSessionOpen(this._cacher.getSession())
-            .subscribe((resp: HttpResponse<boolean>) => {
-                if (resp.ok) {
-                    this.isAuthorized = true;
-                    this._router.navigateByUrl('/devices');
-                }
-            });
-    }
+    // public tryAutoAuthorize(): void {
+    //     this.isSessionOpen(this._cacher.getSession())
+    //         .subscribe((resp: HttpResponse<void>) => {
+    //             if (resp.ok) {
+    //                 // this.isAuthorized = true;
+    //                 this._router.navigateByUrl('/devices');
+    //             }
+    //         });
+    // }
 
-    public isSessionOpen(session: ISession): Observable<HttpResponse<boolean>> {
-        return this._req.request<boolean>({
+    public isSessionOpen(session: ISession): Observable<HttpResponse<void>> {
+        return this._req.request<void>({
             url: `api/auth/isSessionOpen?token=${session.token}`,
             method: RequestMethodType.get
         });
+    }
+
+    public isCurrentSessionOpen(): Observable<HttpResponse<void>> {
+        const session: ISession = this._cacher.getSession();
+
+        if (session && session.token) {
+            return this.isSessionOpen(session);
+        }
+
+        return of(new HttpResponse<void>({
+            status: 400
+        }));
     }
 }
