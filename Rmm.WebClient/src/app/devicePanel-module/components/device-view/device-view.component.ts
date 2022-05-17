@@ -15,14 +15,15 @@ import { DevicesStorageService } from '../../services/deviceStorage/devices-stor
 })
 export class DeviceViewComponent implements OnInit, OnDestroy {
     // public imageToShow?: string | ArrayBuffer | null;
-    public get selectedDevice(): DeviceStaticInfo {
+    public get selectedDevice(): DeviceStaticInfo | undefined {
         return this._selectedDevice;
     }
-    private _selectedDevice!: DeviceStaticInfo;
+    private _selectedDevice?: DeviceStaticInfo;
     private _deviceUpdater!: Subscription;
     
     constructor(private _storage: DevicesStorageService, private _screen: DeviceScreenService) { }
     public ngOnInit(): void {
+        this._selectedDevice = this._storage.selectedDevice;
 
         this._deviceUpdater = this._storage
             .onDeviceSelected$

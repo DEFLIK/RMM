@@ -9,3 +9,8 @@
     </div>
     <!-- {{ selectedDevice.id }} -->
 </div>
+
+<div class="unselected" *ngIf="!selectedDevice">
+    <img src="../../../../assets/svg/selection.svg" alt="selection">
+    <span>Select any device</span>
+</div>
