@@ -21,7 +21,7 @@ export class DeviceViewComponent implements OnInit, OnDestroy {
     private _selectedDevice?: DeviceStaticInfo;
     private _deviceUpdater!: Subscription;
     
-    constructor(private _storage: DevicesStorageService, private _screen: DeviceScreenService) { }
+    constructor(private _storage: DevicesStorageService) { }
     public ngOnInit(): void {
         this._selectedDevice = this._storage.selectedDevice;
 
