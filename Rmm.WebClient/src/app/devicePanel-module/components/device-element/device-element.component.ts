@@ -3,6 +3,7 @@ import { interval, Observable } from 'rxjs';
 import { DeviceStaticInfo } from 'src/app/devicePanel-module/models/deviceInfo';
 import { DeviceStatus } from '../../enums/deviceStatus';
 import { DeviceState } from '../../models/deviceState';
+import { DeviceStateResponse } from '../../models/response/deviceState-response';
 import { DeviceStateService } from '../../services/deviceState/device-state.service';
 import { DevicesStorageService } from '../../services/deviceStorage/devices-storage.service';
 
@@ -20,7 +21,7 @@ export class DeviceElementComponent implements OnInit {
 
     constructor(private _storage: DevicesStorageService) { }
     public ngOnInit(): void {
-        this.deviceState = this._storage.devicesState.get(this.deviceInfo.id) ?? new DeviceState();
+        this.deviceState = this._storage.devicesState.get(this.deviceInfo.id) ?? new DeviceState(new DeviceStateResponse());
     }
 
     @HostListener('click')

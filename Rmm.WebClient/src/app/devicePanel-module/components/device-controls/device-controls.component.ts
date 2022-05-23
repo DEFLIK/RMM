@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DeviceStaticInfo } from '../../models/deviceInfo';
 import { DevicesStorageService } from '../../services/deviceStorage/devices-storage.service';
-import { DeviceManipulationService } from '../../services/deviceTerminal/device-manipulation.service';
+import { DeviceManipulationService } from '../../services/deviceManipulation/device-manipulation.service';
 
 @Component({
     selector: 'app-device-controls',

@@ -11,13 +11,13 @@ import { DeviceScreen } from '../../models/deviceScreen';
 export class DeviceScreenService {
     constructor(private _req: RequestService) { }
 
-    public set(state: DeviceScreen): Observable<HttpResponse<void>> {
-        return this._req.request<void, DeviceScreen>( {
-            url: 'api/device/screen/set',
-            method: RequestMethodType.put,
-            body: state
-        });
-    }
+    // public set(state: DeviceScreen): Observable<HttpResponse<void>> {
+    //     return this._req.request<void, DeviceScreen>( {
+    //         url: 'api/device/screen/set',
+    //         method: RequestMethodType.put,
+    //         body: state
+    //     });
+    // }
 
     public get(id: string): Observable<HttpResponse<Blob>> {
         return this._req.request<Blob>( {

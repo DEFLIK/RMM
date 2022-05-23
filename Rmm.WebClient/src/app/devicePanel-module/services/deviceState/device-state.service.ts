@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { RequestMethodType } from 'src/app/global-services/request/models/request-method';
 import { RequestService } from 'src/app/global-services/request/request.service';
 import { DeviceState } from '../../models/deviceState';
+import { DeviceStateResponse } from '../../models/response/deviceState-response';
 
 @Injectable({
     providedIn: 'root'
@@ -20,8 +21,8 @@ export class DeviceStateService {
         });
     }
 
-    public get(id: string): Observable<HttpResponse<DeviceState>> {
-        return this._req.request<DeviceState>( {
+    public get(id: string): Observable<HttpResponse<DeviceStateResponse>> {
+        return this._req.request<DeviceStateResponse>( {
             url: `api/device/state/get?id=${id}`,
             method: RequestMethodType.get
         });

@@ -5,7 +5,7 @@ import { interval, Subscription } from 'rxjs';
 import { DeviceStaticInfo } from 'src/app/devicePanel-module/models/deviceInfo';
 import { DeviceSystemLogs } from 'src/app/devicePanel-module/models/deviceSystemLogs';
 import { DevicesStorageService } from 'src/app/devicePanel-module/services/deviceStorage/devices-storage.service';
-import { DeviceManipulationService } from 'src/app/devicePanel-module/services/deviceTerminal/device-manipulation.service';
+import { DeviceManipulationService } from 'src/app/devicePanel-module/services/deviceManipulation/device-manipulation.service';
 
 @Component({
     selector: 'app-device-terminal',
