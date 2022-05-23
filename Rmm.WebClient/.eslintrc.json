@@ -1,7 +1,10 @@
 {
   "root": true,
   "ignorePatterns": [
-    "projects/**/*"
+    "projects/**/*",
+    "*.spec.ts",
+    "src/environments",
+    "test.ts"
   ],
   "overrides": [
     {
