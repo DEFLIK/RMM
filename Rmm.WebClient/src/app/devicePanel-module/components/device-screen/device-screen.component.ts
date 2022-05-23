@@ -48,13 +48,6 @@ export class DeviceScreenComponent implements OnInit, OnDestroy {
         this.isProcessing = true;
         this._screen
             .get(this.selectedDevice.id)
-            .pipe(catchError((response: HttpErrorResponse) => {
-                this._screenUpdater.unsubscribe();
-                this.imageToShow = null;
-                this.isProcessing = false;
-
-                return EMPTY;
-            }))
             .subscribe({
                 next: (resp: HttpResponse<Blob>) => {
                     if (resp.ok && resp.body) {
@@ -64,6 +57,10 @@ export class DeviceScreenComponent implements OnInit, OnDestroy {
                         });
 
                         reader.readAsDataURL(resp.body);
+                    } else {
+                        this._screenUpdater.unsubscribe();
+                        this.imageToShow = null;
+                        this.isProcessing = false;
                     }
                     this.isProcessing = false;
                 } 
