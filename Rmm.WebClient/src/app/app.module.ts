@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { Component, NgModule, NgModuleFactory } from '@angular/core';
+import { Component, ErrorHandler, NgModule, NgModuleFactory } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadChildrenCallback, RouterModule } from '@angular/router';
@@ -14,10 +14,13 @@ import { DevicesPanelComponent } from './devicePanel-module/devices-panel.compon
 import { AuthGuard } from './auth-module/guards/auth.guard';
 import { AuthInterceptor } from './auth-module/services/auth/auth.interceptor';
 import { AppRoutingModule } from './app-routing.module';
+import { NotificationComponent } from './global-components/notification/notification.component';
+import { GlobalErrorHandler } from './global-handlers/globalError.handler';
 
 @NgModule({
     declarations: [
         AppComponent,
+        NotificationComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -25,6 +28,12 @@ import { AppRoutingModule } from './app-routing.module';
         FormsModule,
         AppRoutingModule
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    providers: [
+        {
+            provide: ErrorHandler,
+            useClass: GlobalErrorHandler
+        }
+    ]
 })
 export class AppModule { }
