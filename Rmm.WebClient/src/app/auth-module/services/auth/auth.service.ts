@@ -8,6 +8,7 @@ import { EncryptionService } from '../encrypt/encryption.service';
 import { Router } from '@angular/router';
 import { RequestService } from 'src/app/global-services/request/request.service';
 import { RequestMethodType } from 'src/app/global-services/request/models/request-method';
+import { NotificationService } from 'src/app/global-services/notification/notification.service';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +20,8 @@ export class AuthService {
         private _req: RequestService,
         private _encr: EncryptionService,
         private _cacher: SessionCacheService,
-        private _router: Router
+        private _router: Router,
+        private _notify: NotificationService
     ) {}
 
     public registerNewUser(userName: string, email: string, pass: string): void {
@@ -29,14 +31,15 @@ export class AuthService {
             url: `api/auth/registerNewUser?userName=${userName}&email=${email}&hash=${encryptedPass}`,
             method: RequestMethodType.get
         }).subscribe({
-            next: (resp: HttpResponse<void>) => {
+            next: (resp: HttpResponse<void> | HttpErrorResponse) => {
                 if (resp.ok) {
+                    console.log(resp);
                     this.openSession(userName, pass);
+                } else {
+                    this._notify.show((resp as HttpErrorResponse).error);
                 }
-                
-                this.isProcessing = false;
             },
-            error: () => this.isProcessing = false
+            complete: () => this.isProcessing = false
         });
     }
 
@@ -47,15 +50,19 @@ export class AuthService {
             url: `api/auth/openSession?userName=${userName}&hash=${encryptedPass}`,
             method: RequestMethodType.get
         }).subscribe({
-            next: (resp: HttpResponse<ISession>) => {
+            next: (resp: HttpResponse<ISession> | HttpErrorResponse) => {
+                if (resp instanceof HttpErrorResponse) {
+                    this._notify.show((resp as HttpErrorResponse).error);
+
+                    return;
+                }
+
                 if (resp && resp.body) {
-                    console.log(resp.body);
                     this._cacher.cacheSession(resp.body);
                     this._router.navigateByUrl('');
-                    this.isProcessing = false;
                 }
             },
-            error: () => this.isProcessing = false
+            complete: () => this.isProcessing = false
         });
     }
 
@@ -74,9 +81,8 @@ export class AuthService {
                 this._req.unsubscribeAll();
                 this._cacher.removeSession();
                 this._router.navigateByUrl('auth');
-                this.isProcessing = false;
             },
-            error: () => this.isProcessing = false
+            complete: () => this.isProcessing = false
         });
     }
 
