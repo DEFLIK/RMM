@@ -18,8 +18,7 @@ export class HeaderComponent {
 
     constructor(
         private _router: Router,
-        private _auth: AuthService,
-        private _storage: SessionCacheService
+        private _auth: AuthService
     ) { }
 
     public logOut(): void {
