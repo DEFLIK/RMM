@@ -12,15 +12,16 @@ import { SecondsRoundPipe } from './pipes/seconds-round.pipe';
 import { FormControlDirective, ReactiveFormsModule } from '@angular/forms';
 import { DeviceFilterPipe } from './pipes/deviceFilter.pipe';
 import { NgChartsModule } from 'ng2-charts';
-import { DevicePerformanceGraphComponent } from './components/device-perf-graph/device-performance-graph/device-performance-graph.component';
+import { DevicePerformanceGraphComponent } from './components/device-performance-graph/device-performance-graph.component';
 import { DevicesStorageService } from './services/deviceStorage/devices-storage.service';
 import { DeviceTerminalComponent } from './components/device-terminal/device-terminal/device-terminal.component';
-import { SettingsComponent } from './settings/settings.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { DeviceScreenComponent } from './components/device-screen/device-screen.component';
 import { DeviceViewComponent } from './components/device-view/device-view.component';
 import { DeviceControlsComponent } from './components/device-controls/device-controls.component';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 import { DevicesMapComponent } from './components/devices-map/devices-map.component';
+import { RepeatDirective } from './directives/repeat.directive';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { DevicesMapComponent } from './components/devices-map/devices-map.compon
         SettingsComponent,
         DeviceScreenComponent,
         DeviceControlsComponent,
-        DevicesMapComponent
+        DevicesMapComponent,
+        RepeatDirective
     ],
     imports: [
         AngularYandexMapsModule,
@@ -54,7 +56,7 @@ import { DevicesMapComponent } from './components/devices-map/devices-map.compon
                     },
                     {
                         path: 'view',
-                        component: DeviceViewComponent
+                        component: DeviceViewComponent,
                     },
                     {
                         path: '**',
