@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpRequest,
 import { Injectable, isDevMode } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, EMPTY, map, merge, Observable, of, share, skipWhile, Subject, takeUntil, throwError } from 'rxjs';
+import { NotificationService } from '../notification/notification.service';
 import { ContentType } from './models/content-type';
 import { IRequestOptions } from './models/request-options';
 import { RequestResponseType } from './models/request-response-type';
@@ -16,7 +17,8 @@ export class RequestService {
     /** Конструктор класса */
     constructor(
         protected http: HttpClient,
-        private _router: Router
+        private _router: Router,
+        private _notify: NotificationService
     ) { }
 
     /** Метод для отписки от всех запросов */
@@ -91,6 +93,11 @@ export class RequestService {
                     }
 
                     return value;
+                }),
+                catchError((err: any) => {
+                    // this._notify.show(err.error);
+                    
+                    return of(err);
                 }),
                 takeUntil(requestParams.unsubscriber ? merge(this._takeUntil, requestParams.unsubscriber) : this._takeUntil),
                 share()
