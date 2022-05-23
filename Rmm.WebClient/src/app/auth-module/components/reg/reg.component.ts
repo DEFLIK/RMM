@@ -18,7 +18,7 @@ export class RegComponent {
         userName: new FormControl('', Validators.required),
         userEmail: new FormControl('', [
             Validators.required,
-            Validators.pattern('[a-zA-Z_]+@[a-zA-Z_]+?.[a-zA-Z]{2,3}')
+            Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
         ]),
         userPassword: new FormControl('', Validators.required)
     });
